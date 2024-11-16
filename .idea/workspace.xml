@@ -4,22 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="笔记">
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/VertexShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/ShaderRender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/APlane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/util/FileManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" afterDir="false" />
+    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="批量加载图形渲染">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/AUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/AUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/controller/KeyInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/controller/KeyInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/TestRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/TestRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +113,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1731772721545</updated>
-      <workItem from="1731772724040" duration="16329000" />
+      <workItem from="1731772724040" duration="17243000" />
     </task>
     <task id="LOCAL-00001" summary="即时模式进一步探讨, 如何进行缩放 旋转 位移">
       <option name="closed" value="true" />
@@ -142,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731781617421</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="批量加载图形渲染">
+      <option name="closed" value="true" />
+      <created>1731789393260</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731789393260</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +159,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="即时模式进一步探讨, 如何进行缩放 旋转 位移" />
     <MESSAGE value="笔记" />
-    <option name="LAST_COMMIT_MESSAGE" value="笔记" />
+    <MESSAGE value="批量加载图形渲染" />
+    <option name="LAST_COMMIT_MESSAGE" value="批量加载图形渲染" />
   </component>
 </project>

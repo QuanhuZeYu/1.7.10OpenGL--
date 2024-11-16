@@ -15,12 +15,20 @@ public class Rectangle extends APlane{
     public int eboID;
     public int vaoID;
     public int vertexVBOID;
+    public int colorVBOID;
 
     public float[] vertices = {
             -0.5f, -0.5f, 0.0f,
             0.5f, -0.5f, 0.0f,
             0.5f, 0.5f, 0.0f,
             -0.5f, 0.5f, 0.0f
+    };
+
+    public float[] colors = {
+            1.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 1.0f
     };
 
     public int[] indices = {
@@ -34,9 +42,17 @@ public class Rectangle extends APlane{
 
         vertexVBOID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vertexVBOID);
-        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertices.length);
-        vertexBuffer.put(vertices).flip();
-        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length);
+        buffer.put(vertices).flip();
+        glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
+
+        colorVBOID = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBOID);
+        buffer = BufferUtils.createFloatBuffer(colors.length);
+        buffer.put(colors).flip();
+        glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
 
         eboID = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
@@ -44,8 +60,8 @@ public class Rectangle extends APlane{
         indexBuffer.put(indices).flip();
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
         glBindVertexArray(0);
     }
 
