@@ -1,0 +1,43 @@
+plugins {
+    id "java"
+}
+
+group = "club.heiqi"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    jomlVersion = "1.10.8"
+    log4jVersion = "2.24.1"
+
+    lwjglVersion = "3.3.4"
+    lwjglNatives = "natives-windows"
+}
+
+dependencies {
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+
+    implementation "org.joml:joml:${jomlVersion}"
+
+    implementation "org.lwjgl:lwjgl:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-opengl:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-stb:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-assimp:${lwjglVersion}"
+
+    runtimeOnly "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-assimp:${lwjglVersion}:${lwjglNatives}"
+}
+
+test {
+    useJUnitPlatform()
+}
