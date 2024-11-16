@@ -39,7 +39,7 @@ public class Window {
 
     // 配置 OpenGL 版本
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // OpenGL 主版本号
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2); // OpenGL 次版本号
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // OpenGL 次版本号
     // 设置为兼容模式，支持即时模式的功能
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
     // 允许窗口调整大小
