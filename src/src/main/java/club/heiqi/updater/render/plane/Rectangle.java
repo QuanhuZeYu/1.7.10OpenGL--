@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Rectangle extends APlane{
+    public long time = System.currentTimeMillis();
     public int eboID;
     public int vaoID;
     public int vertexVBOID;
@@ -25,10 +26,10 @@ public class Rectangle extends APlane{
     };
 
     public float[] colors = {
-            1.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 1.0f,
-            1.0f, 1.0f, 1.0f
+            0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f
     };
 
     public int[] indices = {
@@ -69,6 +70,25 @@ public class Rectangle extends APlane{
     public void draw() {
         glBindVertexArray(vaoID);
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+        updateColor();
+    }
+
+    public void updateColor() {
+        long i = System.currentTimeMillis() - time;
+        float a = (float) ((Math.sin(i / 1000.0) / 2) +0.5);
+        float b = (float) ((Math.cos(i / 1000.0) / 2) +0.5);
+        float[] newColors = {
+                a, b, 0,
+                0, a, b,
+                b, 0, a,
+                a, b, 0
+        };
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBOID);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(newColors.length);
+        buffer.put(newColors).flip();
+        glBufferSubData(GL_ARRAY_BUFFER, 0, buffer);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
         glBindVertexArray(0);
     }
 }

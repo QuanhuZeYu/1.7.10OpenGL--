@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="批量加载图形渲染">
+    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="修改着色器, 使其支持传入顶点颜色">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +111,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1731772721545</updated>
-      <workItem from="1731772724040" duration="17243000" />
+      <workItem from="1731772724040" duration="19286000" />
     </task>
     <task id="LOCAL-00001" summary="即时模式进一步探讨, 如何进行缩放 旋转 位移">
       <option name="closed" value="true" />
@@ -139,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731789393260</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="修改着色器, 使其支持传入顶点颜色">
+      <option name="closed" value="true" />
+      <created>1731790113112</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731790113112</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +166,7 @@
     <MESSAGE value="即时模式进一步探讨, 如何进行缩放 旋转 位移" />
     <MESSAGE value="笔记" />
     <MESSAGE value="批量加载图形渲染" />
-    <option name="LAST_COMMIT_MESSAGE" value="批量加载图形渲染" />
+    <MESSAGE value="修改着色器, 使其支持传入顶点颜色" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改着色器, 使其支持传入顶点颜色" />
   </component>
 </project>
