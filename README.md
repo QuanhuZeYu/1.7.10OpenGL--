@@ -10,7 +10,7 @@ glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 ```
 
 即时模式的特征为:
-使用glBegin()和glEnd()来渲染，而不是使用shader来渲染。
+使用glBegin()和glEnd()来渲染，而不是使用VAO等特性来渲染。
 
 即时模式固定管线可以直接使用视图矩阵来进行渲染变换
 
