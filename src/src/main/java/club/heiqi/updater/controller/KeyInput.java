@@ -16,8 +16,8 @@ public class KeyInput extends AUpdate {
     public Set<Integer> pressedKeys = new LinkedHashSet<>();
 
     public KeyInput(String deviceName, Window window) {
+        super(window);
         if (deviceName != null && !deviceName.isEmpty()) this.deviceName = deviceName;
-        this.window = window;
     }
 
     public void register() {
@@ -37,6 +37,9 @@ public class KeyInput extends AUpdate {
 
     @Override
     public void update() {
-        if (!isRegistered) register();
+        if (!isRegistered) {
+            register();
+            isRegistered = true;
+        }
     }
 }

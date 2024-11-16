@@ -6,8 +6,9 @@ import org.lwjgl.opengl.GL11;
 
 public class TestRender extends AUpdate {
     public Window window;
+
     public TestRender(Window window) {
-        this.window = window;
+        super(window);
     }
 
     @Override
@@ -33,5 +34,6 @@ public class TestRender extends AUpdate {
         GL11.glColor3f(0.0f, 0.0f, 1.0f); // 顶点3：蓝色
         GL11.glVertex2f(0.0f, 0.5f);
         GL11.glEnd();
+        GL11.glLoadIdentity(); // 恢复为单位矩阵
     }
 }
