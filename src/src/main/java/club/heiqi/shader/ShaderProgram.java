@@ -1,6 +1,7 @@
 package club.heiqi.shader;
 
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
 
 public class ShaderProgram {
     public int programID;
@@ -9,6 +10,7 @@ public class ShaderProgram {
     public FragShader fragShader;
 
     public ShaderProgram() {
+        stbi_set_flip_vertically_on_load(true);
         vertexShader = new VertexShader();
         fragShader = new FragShader();
         programID = glCreateProgram();
