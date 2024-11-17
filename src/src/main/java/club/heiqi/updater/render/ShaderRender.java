@@ -33,8 +33,8 @@ public class ShaderRender extends AUpdate {
 
     public void init() {
         shaderProgram = new ShaderProgram();
-        APlane rectangle = new Rectangle();
-        APlane triangle = new Triangle();
+        APlane rectangle = new Rectangle(window);
+        APlane triangle = new Triangle(window);
         planes.add(rectangle);
         planes.add(triangle);
     }
