@@ -4,14 +4,16 @@ layout (location = 1) in vec3 aColor;
 layout (location = 2) in vec2 aTexCoord;
 //layout (location = 3) in mat4 aTransform;
 
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 out vec4 vertexColor; // 为片段着色器指定一个颜色输出
 out vec2 TexCoord;
 
 void main()
 {
-    gl_Position = transform * vec4(aPos, 1.0); // 使用变换矩阵
+    gl_Position = projection * view * model * vec4(aPos, 1.0); // 使用变换矩阵
     vertexColor = vec4(aColor, 1.0);
     TexCoord = aTexCoord;
 }

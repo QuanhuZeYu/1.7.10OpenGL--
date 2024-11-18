@@ -8,13 +8,13 @@ public class Transform {
     public Vector3f position;
     public Quaternionf quaternionf;
     public Vector3f scale;
-    public Matrix4f transformMatrix;
+    public Matrix4f modelMatrix;
 
     public Transform() {
         position = new Vector3f().zero();
         quaternionf = new Quaternionf();
         scale = new Vector3f(1, 1, 1);
-        transformMatrix = new Matrix4f().identity();
+        modelMatrix = new Matrix4f().identity();
     }
 
     public void addPosition(float x, float y, float z) {
@@ -54,11 +54,11 @@ public class Transform {
     }
 
     public Matrix4f updateMatrix() {
-        transformMatrix.identity()
+        modelMatrix.identity()
                 .translate(position)
                 .rotate(quaternionf)
                 .scale(scale);
-        return transformMatrix;
+        return modelMatrix;
     }
 
     public void reset() {

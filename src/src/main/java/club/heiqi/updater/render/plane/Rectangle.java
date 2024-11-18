@@ -1,18 +1,13 @@
 package club.heiqi.updater.render.plane;
 
-import club.heiqi.updater.render.transform.Transform;
+import club.heiqi.updater.render.ShaderRender;
 import club.heiqi.util.FileManager;
 import club.heiqi.window.Window;
 import org.lwjgl.BufferUtils;
 
 import java.io.File;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.Objects;
 
-import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
@@ -48,8 +43,8 @@ public class Rectangle extends APlane{
             2, 3, 0
     };
 
-    public Rectangle(Window window) {
-        super(window);
+    public Rectangle(Window window, ShaderRender shaderRender) {
+        super(window, shaderRender);
         File texture = FileManager.getFile("texture/test.png");
 
         vaoID = createVAO();
@@ -78,12 +73,8 @@ public class Rectangle extends APlane{
     }
 
     @Override
-    public void draw() {
-        glBindVertexArray(vaoID);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        setUniform(UniformName.Transform.name, transform.transformMatrix);
+    public void drawElement() {
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
         updateColor();
         updatePosition();
     }
@@ -110,8 +101,8 @@ public class Rectangle extends APlane{
         long i = System.currentTimeMillis() - time;
         float a = (float) (Math.sin(i / 1000.0));
         float b = (float) (Math.cos(i / 1000.0));
-        logger.info("a: {}, b: {}", a, b);
         transform.setPosition(a, b, 0);
+        transform.setRotation(a, b, 0);
         transform.updateMatrix();
     }
 }

@@ -15,14 +15,15 @@ import java.nio.IntBuffer;
 
 import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public abstract class APlane {
     enum UniformName{
-        Transform("transform"),;
+        ModelTrans("model"),
+        View("view"),
+        Projection("projection");
         public final String name;
         UniformName(String name) {
             this.name = name;
@@ -38,11 +39,17 @@ public abstract class APlane {
 
     public Window window;
     public int programID;
+    public ShaderRender shaderRender;
+    public Matrix4f viewMatrix;
+    public Matrix4f projection;
 
     public Transform transform;
 
-    public APlane(Window window) {
+    public APlane(Window window, ShaderRender shaderRender) {
         this.window = window;
+        this.shaderRender = shaderRender;
+        viewMatrix = shaderRender.viewMatrix;
+        projection = shaderRender.projectionMatrix;
         for (AUpdate update : window.renders) {
             if (update instanceof ShaderRender) {
                 programID = ((ShaderRender) update).shaderProgram.programID;
@@ -55,6 +62,16 @@ public abstract class APlane {
     }
 
     public void draw() {
+        glBindVertexArray(vaoID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        setUniform(UniformName.ModelTrans.name, transform.modelMatrix);
+        setUniform(UniformName.View.name, viewMatrix);
+        setUniform(UniformName.Projection.name, projection);
+        drawElement();
+        glBindVertexArray(0);
+    }
+
+    public void drawElement() {
 
     }
 
@@ -112,7 +129,16 @@ public abstract class APlane {
     public void setUniform(String uniformName, Matrix4f matrix) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             int location = glGetUniformLocation(programID, uniformName);
-            glUniformMatrix4fv(location, false, matrix.get(stack.mallocFloat(16)));
+            if (location == -1) {
+                throw new RuntimeException("无法找到uniform: " + uniformName);
+            }
+            FloatBuffer buffer = stack.mallocFloat(16);
+            matrix.get(buffer);
+            glUniformMatrix4fv(location, false, buffer);
+        } catch (Exception e) {
+            // 记录异常信息，可以根据需要调整日志级别
+            logger.error("设置uniform: {} 失败: ", uniformName, e);
         }
     }
+
 }

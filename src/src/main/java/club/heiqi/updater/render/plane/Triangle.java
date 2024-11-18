@@ -1,12 +1,12 @@
 package club.heiqi.updater.render.plane;
 
+import club.heiqi.updater.render.ShaderRender;
 import club.heiqi.util.FileManager;
 import club.heiqi.window.Window;
 import org.lwjgl.BufferUtils;
 
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -38,8 +38,8 @@ public class Triangle extends APlane{
             0, 1, 2
     };
 
-    public Triangle(Window window) {
-        super(window);
+    public Triangle(Window window, ShaderRender shaderRender) {
+        super(window, shaderRender);
         File textureF = FileManager.getFile("texture/test2.jpg");
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
@@ -70,7 +70,7 @@ public class Triangle extends APlane{
     public void draw() {
         glBindVertexArray(vaoID);
         glBindTexture(GL_TEXTURE_2D, textureID);
-        setUniform(UniformName.Transform.name, transform.transformMatrix);
+        setUniform(UniformName.ModelTrans.name, transform.modelMatrix);
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
