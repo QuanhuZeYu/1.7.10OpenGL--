@@ -25,6 +25,10 @@ public class Transform {
         position.set(x, y, z);
     }
 
+    public void addRotation(float x, float y, float z) {
+        quaternionf.rotateXYZ(x, y, z);
+    }
+
     public void setRotation(float x, float y, float z) {
         quaternionf.identity().rotateXYZ(x, y, z);
     }
@@ -47,6 +51,10 @@ public class Transform {
                 return;
             }
         }
+    }
+
+    public void setScale(float scale) {
+        setScale(scale, scale, scale);
     }
 
     public void setScale(float x, float y, float z) {

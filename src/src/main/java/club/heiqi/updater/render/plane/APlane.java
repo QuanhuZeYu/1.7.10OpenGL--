@@ -1,34 +1,24 @@
 package club.heiqi.updater.render.plane;
 
-import club.heiqi.updater.AUpdate;
-import club.heiqi.updater.render.ShaderRender;
+import club.heiqi.shader.ShaderProgram;
+import club.heiqi.shader.VertexShader;
+import club.heiqi.updater.render.Scene;
 import club.heiqi.updater.render.transform.Transform;
 import club.heiqi.window.Window;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryStack;
 
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public abstract class APlane {
-    enum UniformName{
-        ModelTrans("model"),
-        View("view"),
-        Projection("projection");
-        public final String name;
-        UniformName(String name) {
-            this.name = name;
-        }
-    }
     public long time = System.currentTimeMillis();
     public int eboID;
     public int vaoID;
@@ -39,34 +29,24 @@ public abstract class APlane {
 
     public Window window;
     public int programID;
-    public ShaderRender shaderRender;
+    public Scene scene;
+    public ShaderProgram shaderProgram;
     public Matrix4f viewMatrix;
-    public Matrix4f projection;
-
     public Transform transform;
 
-    public APlane(Window window, ShaderRender shaderRender) {
+    public APlane(Window window, Scene scene) {
         this.window = window;
-        this.shaderRender = shaderRender;
-        viewMatrix = shaderRender.viewMatrix;
-        projection = shaderRender.projectionMatrix;
-        for (AUpdate update : window.renders) {
-            if (update instanceof ShaderRender) {
-                programID = ((ShaderRender) update).shaderProgram.programID;
-                break;
-            }
-        }
+        this.scene = scene;
+        shaderProgram = scene.shaderProgram;
+        programID = scene.shaderProgram.programID;
+        viewMatrix = scene.viewMatrix;
         transform = new Transform();
-
-
     }
 
     public void draw() {
         glBindVertexArray(vaoID);
         glBindTexture(GL_TEXTURE_2D, textureID);
-        setUniform(UniformName.ModelTrans.name, transform.modelMatrix);
-        setUniform(UniformName.View.name, viewMatrix);
-        setUniform(UniformName.Projection.name, projection);
+        shaderProgram.setUniform(VertexShader.UniformName.ModelTrans.name, transform.modelMatrix);
         drawElement();
         glBindVertexArray(0);
     }
@@ -125,20 +105,4 @@ public abstract class APlane {
             stbi_image_free(image);
         }
     }
-
-    public void setUniform(String uniformName, Matrix4f matrix) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            int location = glGetUniformLocation(programID, uniformName);
-            if (location == -1) {
-                throw new RuntimeException("无法找到uniform: " + uniformName);
-            }
-            FloatBuffer buffer = stack.mallocFloat(16);
-            matrix.get(buffer);
-            glUniformMatrix4fv(location, false, buffer);
-        } catch (Exception e) {
-            // 记录异常信息，可以根据需要调整日志级别
-            logger.error("设置uniform: {} 失败: ", uniformName, e);
-        }
-    }
-
 }

@@ -2,6 +2,7 @@ package club.heiqi.window;
 
 import club.heiqi.updater.AUpdate;
 import club.heiqi.updater.controller.KeyInput;
+import club.heiqi.updater.render.Scene;
 import org.lwjgl.opengl.GL11;
 
 import java.util.LinkedHashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.createCapabilities;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 public class Window {
     public String title;
@@ -61,6 +63,18 @@ public class Window {
         glfwSwapInterval(GLFW_TRUE); // 垂直同步
         createCapabilities(); // 创建OpenGL上下文
         glfwShowWindow(handle);
+
+        glfwSetWindowSizeCallback(handle, (window, width, height) -> {
+            this.w = width;
+            this.h = height;
+            for (AUpdate render : renders) {
+                if (render instanceof Scene) {
+                    ((Scene) render).updateProjectionMatrix(width, height);
+                    break;
+                }
+            }
+            glViewport(0, 0, width, height);
+        });
     }
 
     public void loop() {

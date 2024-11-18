@@ -10,6 +10,17 @@ import static org.lwjgl.opengl.GL20.*;
 public class VertexShader {
     public int shaderID;
 
+    public enum UniformName{
+        ModelTrans("model"),
+        View("view"),
+        Projection("projection");
+        public final String name;
+        UniformName(String name) {
+            this.name = name;
+        }
+    }
+
+
     public VertexShader() {
         shaderID = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(shaderID, getShaderString());

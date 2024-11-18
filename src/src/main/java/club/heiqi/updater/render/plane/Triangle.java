@@ -1,20 +1,15 @@
 package club.heiqi.updater.render.plane;
 
-import club.heiqi.updater.render.ShaderRender;
+import club.heiqi.updater.render.Scene;
 import club.heiqi.util.FileManager;
 import club.heiqi.window.Window;
-import org.lwjgl.BufferUtils;
 
 import java.io.File;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.stb.STBImage.stbi_image_free;
-import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class Triangle extends APlane{
 
@@ -38,13 +33,9 @@ public class Triangle extends APlane{
             0, 1, 2
     };
 
-    public Triangle(Window window, ShaderRender shaderRender) {
-        super(window, shaderRender);
+    public Triangle(Window window, Scene scene) {
+        super(window, scene);
         File textureF = FileManager.getFile("texture/test2.jpg");
-        IntBuffer width = BufferUtils.createIntBuffer(1);
-        IntBuffer height = BufferUtils.createIntBuffer(1);
-        IntBuffer channels = BufferUtils.createIntBuffer(1);
-        ByteBuffer image = stbi_load(textureF.getAbsolutePath(), width, height, channels, 4);
 
         vaoID = createVAO();
         glBindVertexArray(vaoID);
@@ -67,11 +58,7 @@ public class Triangle extends APlane{
     }
 
     @Override
-    public void draw() {
-        glBindVertexArray(vaoID);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        setUniform(UniformName.ModelTrans.name, transform.modelMatrix);
+    public void drawElement() {
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
     }
 }
