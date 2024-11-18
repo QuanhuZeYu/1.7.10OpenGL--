@@ -2,6 +2,7 @@ package club.heiqi.updater.render.plane;
 
 import club.heiqi.updater.AUpdate;
 import club.heiqi.updater.render.ShaderRender;
+import club.heiqi.updater.render.transform.Transform;
 import club.heiqi.window.Window;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
@@ -12,6 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.*;
@@ -19,6 +21,13 @@ import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public abstract class APlane {
+    enum UniformName{
+        Transform("transform"),;
+        public final String name;
+        UniformName(String name) {
+            this.name = name;
+        }
+    }
     public long time = System.currentTimeMillis();
     public int eboID;
     public int vaoID;
@@ -30,6 +39,8 @@ public abstract class APlane {
     public Window window;
     public int programID;
 
+    public Transform transform;
+
     public APlane(Window window) {
         this.window = window;
         for (AUpdate update : window.renders) {
@@ -38,6 +49,9 @@ public abstract class APlane {
                 break;
             }
         }
+        transform = new Transform();
+
+
     }
 
     public void draw() {
@@ -55,6 +69,13 @@ public abstract class APlane {
         FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
         buffer.put(data).flip();
         glBufferData(GL_ARRAY_BUFFER, buffer, type);
+        return vboID;
+    }
+
+    public int createVBO(FloatBuffer data, int type) {
+        int vboID = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferData(GL_ARRAY_BUFFER, data, type);
         return vboID;
     }
 
@@ -91,7 +112,7 @@ public abstract class APlane {
     public void setUniform(String uniformName, Matrix4f matrix) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             int location = glGetUniformLocation(programID, uniformName);
-
+            glUniformMatrix4fv(location, false, matrix.get(stack.mallocFloat(16)));
         }
     }
 }

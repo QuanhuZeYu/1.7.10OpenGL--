@@ -70,6 +70,7 @@ public class Triangle extends APlane{
     public void draw() {
         glBindVertexArray(vaoID);
         glBindTexture(GL_TEXTURE_2D, textureID);
+        setUniform(UniformName.Transform.name, transform.transformMatrix);
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }

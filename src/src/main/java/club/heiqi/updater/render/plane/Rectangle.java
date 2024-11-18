@@ -1,5 +1,6 @@
 package club.heiqi.updater.render.plane;
 
+import club.heiqi.updater.render.transform.Transform;
 import club.heiqi.util.FileManager;
 import club.heiqi.window.Window;
 import org.lwjgl.BufferUtils;
@@ -11,6 +12,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.Objects;
 
+import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
@@ -68,15 +70,22 @@ public class Rectangle extends APlane{
         glEnableVertexAttribArray(2);
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+//        transform.addPosition(-0.5f, -0.5f, 0);
+//        transform.updateMatrix();
+        transform.setScale(0.5f, 0.5f, 0);
+        transform.updateMatrix();
     }
 
     @Override
     public void draw() {
         glBindVertexArray(vaoID);
         glBindTexture(GL_TEXTURE_2D, textureID);
+        setUniform(UniformName.Transform.name, transform.transformMatrix);
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         updateColor();
+        updatePosition();
     }
 
     public void updateColor() {
@@ -95,5 +104,14 @@ public class Rectangle extends APlane{
         glBufferSubData(GL_ARRAY_BUFFER, 0, buffer);
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+    public void updatePosition() {
+        long i = System.currentTimeMillis() - time;
+        float a = (float) (Math.sin(i / 1000.0));
+        float b = (float) (Math.cos(i / 1000.0));
+        logger.info("a: {}, b: {}", a, b);
+        transform.setPosition(a, b, 0);
+        transform.updateMatrix();
     }
 }
