@@ -25,7 +25,7 @@ public class Scene extends AUpdate {
     public Camera camera;
 
     public Matrix4f viewMatrix = new Matrix4f();
-    public Matrix4f projectionMatrix = new Matrix4f();
+    public Matrix4f projectionMatrix;
 
     public List<Drawable> drawables = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class Scene extends AUpdate {
         this.shaderProgram = new ShaderProgram();
         camera = new Camera(this);
         viewMatrix = camera.viewMatrix;
-        projectionMatrix = projectionMatrix.perspective(65.0f, window.w / (float) window.h, 0.1f, 1000.0f);
+        projectionMatrix = camera.projectionMatrix;
         int id = glGetInteger(GL_CURRENT_PROGRAM);
         glUseProgram(shaderProgram.programID);
         shaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);

@@ -20,6 +20,7 @@ public class Camera extends AUpdate {
     public float speed = 0.02f;
     public float sensitivity = 5f;
     public Vector3f moveVec, tempVec;
+    public Quaternionf tempQuat;
 
     public float yaw = 0.0f; // 临时变量, 每帧都会更新
     public float pitch = 0.0f;
@@ -29,6 +30,7 @@ public class Camera extends AUpdate {
     public MouseInput mouseInput;
     public Matrix4f viewMatrix;
     public Matrix4f invertViewMatrix;
+    public Matrix4f projectionMatrix = new Matrix4f();
 
     public Camera(Scene scene) {
         super(scene.window);
@@ -41,6 +43,8 @@ public class Camera extends AUpdate {
         rotation = trans.quaternionf;
         viewMatrix = new Matrix4f();
         invertViewMatrix = new Matrix4f();
+        projectionMatrix = projectionMatrix.perspective(45.0f, window.w / (float) window.h, 0.1f, 1000.0f);
+        tempQuat = new Quaternionf();
         front = new Vector3f();
         right = new Vector3f();
         moveVec = new Vector3f();
@@ -55,57 +59,26 @@ public class Camera extends AUpdate {
         up.set(0, 1, 0).rotate(rotation);
         viewMatrix.identity().
                 lookAt(position,
-                        position.add(front, new Vector3f()), // 通过相机位置和前向量计算看向的点
+                        position.add(front, tempVec.set(0)), // 通过相机位置和前向量计算看向的点
                         up);
         invertViewMatrix.set(viewMatrix).invert();
         shaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
     }
 
-    public void moveForward(float distance) {
-        viewMatrix.positiveZ(front).negate().mul(distance);
-        position.add(front);
-        updateViewMatrix();
-    }
-
-    public void moveBackward(float distance) {
-        viewMatrix.positiveZ(front).negate().mul(distance);
-        position.sub(front);
-        updateViewMatrix();
-    }
-
-    public void moveRight(float distance) {
-        viewMatrix.positiveX(right).mul(distance);
-        position.add(right);
-        updateViewMatrix();
-    }
-
-    public void moveLeft(float distance) {
-        viewMatrix.positiveX(right).negate().mul(distance);
-        position.sub(right);
-        updateViewMatrix();
-    }
-
-    public void moveUp(float distance) {
-        viewMatrix.positiveY(up).mul(distance);
-        position.add(up);
-        updateViewMatrix();
-    }
-
-    public void moveDown(float distance) {
-        viewMatrix.positiveY(up).negate().mul(distance);
-        position.sub(up);
-        updateViewMatrix();
-    }
-
     public void addRotation(float x, float y) {
-        Quaternionf pitch = new Quaternionf().rotateX((float) Math.toRadians(x));
-        Quaternionf yaw = new Quaternionf().rotateY((float) Math.toRadians(y));
-        rotation.identity().mul(yaw).mul(pitch);
+        Quaternionf yaw = tempQuat.identity().rotateY((float) Math.toRadians(y));
+        rotation.identity().mul(yaw);
+        Quaternionf pitch = tempQuat.identity().rotateX((float) Math.toRadians(x));
+        rotation.mul(pitch);
         updateViewMatrix();
     }
 
     @Override
     public void update() {
+        if (mouseInput.isMiddleButtonPressed) {
+            mouseInput.isCursorLocked = !mouseInput.isCursorLocked;
+            glfwSetInputMode(window.handle, GLFW_CURSOR, mouseInput.isCursorLocked ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+        }
         moveCamera();
         rotateCamera();
     }
@@ -144,11 +117,11 @@ public class Camera extends AUpdate {
             moveVec.add(tempVec);
         }
         if (keyInput.pressedKeys.contains(GLFW_KEY_SPACE)) { // 上
-            viewMatrix.positiveY(tempVec); // 上方向
+            tempVec.set(0, 1, 0);
             moveVec.add(tempVec);
         }
         if (keyInput.pressedKeys.contains(GLFW_KEY_LEFT_CONTROL)) { // 下
-            viewMatrix.positiveY(tempVec).negate(); // 下方向
+            tempVec.set(0, -1, 0);
             moveVec.add(tempVec);
         }
         // 归一化移动向量，防止斜向移动加速

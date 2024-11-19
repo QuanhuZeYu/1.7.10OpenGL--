@@ -24,13 +24,9 @@ public class KeyInput extends AUpdate {
         glfwSetKeyCallback(window.handle, (window, key, scancode, action, mods) -> {
             if (action == GLFW_PRESS) {
                 pressedKeys.add(key);
-//                logger.info("按下键码: ${} 键名: ${}", key, glfwGetKeyName(key, scancode));
-                logger.info(pressedKeys);
             }
             else if (action == GLFW_RELEASE) {
                 pressedKeys.remove(key);
-//                logger.info("释放键码: ${} 键名: ${}", key, glfwGetKeyName(key, scancode));
-                logger.info(pressedKeys);
             }
         });
     }
