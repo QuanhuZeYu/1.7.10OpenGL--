@@ -66,13 +66,5 @@ public class Rectangle extends APlane{
     @Override
     public void drawElement() {
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-        updatePos();
-    }
-
-    public void updatePos() {
-        transform.addPosition(0.002f, 0, 0);
-        transform.addRotation(0, 0, (float) Math.toRadians(0.5f));
-        if (transform.position.x > 1) transform.position.x = -1;
-        transform.updateMatrix();
     }
 }

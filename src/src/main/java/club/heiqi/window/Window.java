@@ -1,10 +1,10 @@
 package club.heiqi.window;
 
 import club.heiqi.updater.AUpdate;
-import club.heiqi.updater.controller.KeyInput;
 import club.heiqi.updater.render.Scene;
 import org.lwjgl.opengl.GL11;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,6 +23,9 @@ public class Window {
     public int frames;
 
     public AUpdate keyInputController;
+    public AUpdate mouseInputController;
+    public Set<AUpdate> logicUpdaters = new LinkedHashSet<>();
+    public Set<AUpdate> unloadCache = new HashSet<>();
     public Set<AUpdate> renders = new LinkedHashSet<>();
 
     // 构造一个OpenGL窗口
@@ -80,7 +83,7 @@ public class Window {
     public void loop() {
         while (!glfwWindowShouldClose(handle)) {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            inputUpdate();
+            logicUpdate();
             renderUpdate();
             glfwSwapBuffers(handle);
             internalUpdate();
@@ -91,9 +94,16 @@ public class Window {
         glfwTerminate();
     }
 
-    public void inputUpdate() {
-        if (keyInputController == null) return;
-        keyInputController.update();
+    public void logicUpdate() {
+        for (AUpdate logicUpdater : logicUpdaters) {
+            logicUpdater.update();
+            if (logicUpdater.isNeedUnload) {
+                unloadCache.add(logicUpdater);
+            }
+        }
+        for (AUpdate unload : unloadCache) {
+            logicUpdaters.remove(unload);
+        }
     }
 
     public void renderUpdate() {

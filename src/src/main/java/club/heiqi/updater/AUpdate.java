@@ -7,6 +7,9 @@ import java.util.UUID;
 public abstract class AUpdate {
     public UUID uuid = UUID.randomUUID();
     public Window window;
+
+    public boolean isNeedUnload = false;
+
     public AUpdate(Window window) {
         this.window = window;
     }

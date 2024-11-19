@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
-public abstract class APlane {
+public abstract class APlane implements Drawable{
     public long time = System.currentTimeMillis();
     public int eboID;
     public int vaoID;
