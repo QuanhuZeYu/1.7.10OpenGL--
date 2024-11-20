@@ -39,7 +39,7 @@ public class MouseInput extends AUpdate {
             deltaY = 0;
             mouseX = xpos;
             mouseY = ypos;
-            if (preMouseX > 0 && preMouseY > 0 && inWindow) {
+            if (inWindow) {
                 deltaX = mouseX - preMouseX;
                 deltaY = mouseY - preMouseY;
             }
@@ -74,5 +74,21 @@ public class MouseInput extends AUpdate {
             isRegistered = isNeedUnload = true;
             logger.info("注册鼠标控制器成功");
         }
+    }
+
+    /**
+     * 获取移动距离并重置(回调仅在移动时才会使用, 使用use可以保证delta在预期实现内)
+     * @return
+     */
+    public float useDeltaX() {
+        float result = (float) deltaX;
+        deltaX = 0;
+        return result;
+    }
+
+    public float useDeltaY() {
+        float result = (float) deltaY;
+        deltaY = 0;
+        return result;
     }
 }

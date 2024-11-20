@@ -9,8 +9,12 @@ import club.heiqi.updater.render.Scene;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import org.lwjgl.BufferUtils;
+
+import java.nio.FloatBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Camera extends AUpdate {
     public Transform trans;
@@ -21,6 +25,7 @@ public class Camera extends AUpdate {
     public float sensitivity = 5f;
     public Vector3f moveVec, tempVec;
     public Quaternionf tempQuat;
+    public FloatBuffer temp4x4Buffer;
 
     public float yaw = 0.0f; // 临时变量, 每帧都会更新
     public float pitch = 0.0f;
@@ -49,6 +54,7 @@ public class Camera extends AUpdate {
         right = new Vector3f();
         moveVec = new Vector3f();
         tempVec = new Vector3f();
+        temp4x4Buffer = BufferUtils.createFloatBuffer(16);
         up = new Vector3f();
         updateViewMatrix();
     }
@@ -63,6 +69,11 @@ public class Camera extends AUpdate {
                         up);
         invertViewMatrix.set(viewMatrix).invert();
         shaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
+        // region 同时更新固定管线
+        temp4x4Buffer = viewMatrix.get(temp4x4Buffer);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadMatrixf(temp4x4Buffer);
+        // endregion
     }
 
     public void addRotation(float x, float y) {
@@ -88,10 +99,10 @@ public class Camera extends AUpdate {
             boolean rotX = mouseInput.deltaX != 0;
             boolean rotY = mouseInput.deltaY != 0;
             if (rotX) {
-                yaw -= (float) (mouseInput.deltaX * sensitivity);
+                yaw -= mouseInput.useDeltaX() * sensitivity;
             }
             if (rotY) {
-                pitch -= (float) (mouseInput.deltaY * sensitivity);
+                pitch -= mouseInput.useDeltaY() * sensitivity;
             }
             addRotation((float) Math.toRadians(pitch), (float) Math.toRadians(yaw));
         }

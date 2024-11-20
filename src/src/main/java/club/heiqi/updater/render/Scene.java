@@ -13,7 +13,9 @@ import club.heiqi.updater.render.transform.Camera;
 import club.heiqi.window.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.lwjgl.BufferUtils;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +34,24 @@ public class Scene extends AUpdate {
     public Scene(Window window) {
         super(window);
         this.shaderProgram = new ShaderProgram();
+        // region 从固定管线中获取矩阵
+        /*float[] view = new float[16];
+        glGetFloatv(GL_MODELVIEW_MATRIX, view);
+        float[] proj = new float[16];
+        glGetFloatv(GL_PROJECTION_MATRIX, proj);*/
+        // endregion
         camera = new Camera(this);
         viewMatrix = camera.viewMatrix;
         projectionMatrix = camera.projectionMatrix;
+        // region 向固定管线传输矩阵
+        FloatBuffer buff = BufferUtils.createFloatBuffer(16);
+        var view = viewMatrix.get(buff);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadMatrixf(view);
+        var proj = projectionMatrix.get(buff);
+        glMatrixMode(GL_PROJECTION);
+        glLoadMatrixf(proj);
+        // endregion
         int id = glGetInteger(GL_CURRENT_PROGRAM);
         glUseProgram(shaderProgram.programID);
         shaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
@@ -51,7 +68,7 @@ public class Scene extends AUpdate {
         Cube cube = new Cube(window, this);
         drawables.add(rectangle);
         drawables.add(triangle);
-        drawables.add(cube);
+//        drawables.add(cube);
     }
 
     @Override

@@ -18,7 +18,8 @@ public class TestRender extends AUpdate {
 
         // 设置模型视图矩阵
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glLoadIdentity();
+
+        GL11.glPushMatrix(); // 保存当前矩阵状态
 
         // 应用变换：平移 -> 旋转 -> 缩放
         GL11.glTranslatef(0.5f, 0.5f, 0.0f); // 平移到屏幕右上角
@@ -34,6 +35,6 @@ public class TestRender extends AUpdate {
         GL11.glColor3f(0.0f, 0.0f, 1.0f); // 顶点3：蓝色
         GL11.glVertex2f(0.0f, 0.5f);
         GL11.glEnd();
-        GL11.glLoadIdentity(); // 恢复为单位矩阵
+        GL11.glPopMatrix();
     }
 }

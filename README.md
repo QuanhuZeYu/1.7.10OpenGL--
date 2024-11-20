@@ -24,3 +24,5 @@ glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 1. 无论在何处使用着色器相关的函数, 都要确定OpenGL启用了对应的着色器ID -- 时刻问自己当前OpenGL是个什么状态
 例如设置uniform 传输顶点数据都要确保着色器ID是正确的
 2. 在初始化OpenGL的时候有些内容是需要绑定OpenGL上下文之后才能进行设置的, 有些还需要启动OpenGL能力之后才可以操作
+
+## 测试在shader中混合使用固定管线矩阵
