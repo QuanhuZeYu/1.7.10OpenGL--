@@ -31,7 +31,6 @@ public abstract class APlane implements Drawable{
     public int programID;
     public Scene scene;
     public ShaderProgram shaderProgram;
-    public Matrix4f viewMatrix;
     public Transform transform;
 
     public APlane(Window window, Scene scene) {
@@ -39,7 +38,6 @@ public abstract class APlane implements Drawable{
         this.scene = scene;
         shaderProgram = scene.shaderProgram;
         programID = scene.shaderProgram.programID;
-        viewMatrix = scene.viewMatrix;
         transform = new Transform();
     }
 

@@ -1,5 +1,6 @@
 package club.heiqi.updater.render;
 
+import club.heiqi.modelLoader.ModelData;
 import club.heiqi.shader.ShaderProgram;
 import club.heiqi.shader.VertexShader;
 import club.heiqi.updater.AUpdate;
@@ -34,15 +35,18 @@ public class Scene extends AUpdate {
     public Scene(Window window) {
         super(window);
         this.shaderProgram = new ShaderProgram();
+
         // region 从固定管线中获取矩阵
         /*float[] view = new float[16];
         glGetFloatv(GL_MODELVIEW_MATRIX, view);
         float[] proj = new float[16];
         glGetFloatv(GL_PROJECTION_MATRIX, proj);*/
         // endregion
+
         camera = new Camera(this);
         viewMatrix = camera.viewMatrix;
         projectionMatrix = camera.projectionMatrix;
+
         // region 向固定管线传输矩阵
         FloatBuffer buff = BufferUtils.createFloatBuffer(16);
         var view = viewMatrix.get(buff);
@@ -52,11 +56,11 @@ public class Scene extends AUpdate {
         glMatrixMode(GL_PROJECTION);
         glLoadMatrixf(proj);
         // endregion
-        int id = glGetInteger(GL_CURRENT_PROGRAM);
+
         glUseProgram(shaderProgram.programID);
+        glEnable(GL_DEPTH_TEST);
         shaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
         shaderProgram.setUniform(VertexShader.UniformName.Projection.name, projectionMatrix);
-        glUseProgram(id);
         addItem();
     }
 
@@ -66,9 +70,11 @@ public class Scene extends AUpdate {
         rectangle.transform.updateMatrix();
         APlane triangle = new Triangle(window, this);
         Cube cube = new Cube(window, this);
+        ModelData model = new ModelData("D:/Code/MC/ReWork/src/src/main/resources/models/精妙背包.obj");
         drawables.add(rectangle);
         drawables.add(triangle);
-//        drawables.add(cube);
+        drawables.add(model);
+        drawables.add(cube);
     }
 
     @Override
@@ -79,7 +85,6 @@ public class Scene extends AUpdate {
         for (Drawable drawable : drawables) {
             drawable.draw();
         }
-        glUseProgram(currentProgramID);
     }
 
     public int getProgramID() {
