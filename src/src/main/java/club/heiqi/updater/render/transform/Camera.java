@@ -39,7 +39,7 @@ public class Camera extends AUpdate {
 
     public Camera(Scene scene) {
         super(scene.window);
-        shaderProgram = scene.shaderProgram;
+        shaderProgram = scene.objShaderProgram;
         this.keyInput = (KeyInput) scene.window.keyInputController;
         this.mouseInput = (MouseInput) scene.window.mouseInputController;
         trans = new Transform();

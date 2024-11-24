@@ -5,11 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="实现纹理加载, 加载多张纹理">
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/Shader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/PlaneCube.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/resources/shader/light.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/APlane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/APlane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/VertexShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/VertexShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/APlane.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Transform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,29 +44,35 @@
       <list>
         <option value="Interface" />
         <option value="AnnotationType" />
+        <option value="fs-template" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="d5094a53535e437d730da3403e651ef8cc0c65c0" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "QuanhuZeYu"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;QuanhuZeYu&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/QuanhuZeYu/1.7.10OpenGL--.git",
-    "accountId": "35c3600e-901d-4f6e-974a-bb2b336f0775"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/QuanhuZeYu/1.7.10OpenGL--.git&quot;,
+    &quot;accountId&quot;: &quot;35c3600e-901d-4f6e-974a-bb2b336f0775&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2owFREAiY6k9JvH2m9ejUzABUzk" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -64,7 +85,7 @@
     "Gradle.src.executor": "Run",
     "Gradle.下载源代码.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "7d90c2a6",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Code/MC/ReWork/src/src/main/resources/texture",
     "node.js.detected.package.eslint": "true",
@@ -75,6 +96,7 @@
     "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -99,6 +121,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="应用程序.Main" />
+        <item itemvalue="应用程序.Main" />
+        <item itemvalue="应用程序.Main" />
+        <item itemvalue="应用程序.Main" />
         <item itemvalue="应用程序.Main" />
       </list>
     </recent_temporary>

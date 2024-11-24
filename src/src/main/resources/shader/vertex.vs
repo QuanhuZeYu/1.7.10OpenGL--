@@ -14,6 +14,6 @@ out vec2 TexCoord;
 void main()
 {
     gl_Position = projection * view * model * vec4(aPos, 1.0); // 使用变换矩阵
-    vertexColor = vec4(aColor, 1.0);
+    vertexColor = vec4(1.0);
     TexCoord = aTexCoord;
 }

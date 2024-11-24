@@ -11,38 +11,34 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
 
-public class Rectangle extends APlane{
-
-    public float[] vertices = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.5f, 0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f
-    };
-
-    public float[] colors = {
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            01.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-    };
-
-    float[] textureCoords = {
-        0.0f, 0.0f, // 左下角
-        1.0f, 0.0f, // 右下角
-        1.0f, 1.0f, // 右上角
-        0.0f, 1.0f  // 左上角
-    };
-
-    public int[] indices = {
-            0, 1, 2,
-            2, 3, 0
-    };
-
+public class Rectangle extends AMesh {
     public Rectangle(Window window, Scene shaderRender) {
         super(window, shaderRender);
-        File texture = FileManager.getFile("texture/test.png");
+        vertices = new float[]{
+                -0.5f, -0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f,
+                0.5f, 0.5f, 0.0f,
+                -0.5f, 0.5f, 0.0f
+        };
+        colors = new float[]{
+                1.0f, 1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                01.0f, 1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+        };
+        indices = new int[]{
+                0, 1, 2,
+                2, 3, 0
+        };
+        textureCoords = new float[]{
+                0.0f, 0.0f, // 左下角
+                1.0f, 0.0f, // 右下角
+                1.0f, 1.0f, // 右上角
+                0.0f, 1.0f  // 左上角
+        };
+        texturePath = "texture/test.png";
 
+        File texture = FileManager.getFile("texture/test.png");
         vaoID = createVAO();
         glBindVertexArray(vaoID);
 
@@ -61,10 +57,5 @@ public class Rectangle extends APlane{
         glEnableVertexAttribArray(2);
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
-
-    @Override
-    public void drawElement() {
-        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
     }
 }
