@@ -6,7 +6,11 @@
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../MyApp/.ENV/Gradle/gradle-8.10.2" />
+<<<<<<< HEAD
         <option name="gradleJvm" value="23" />
+=======
+        <option name="gradleJvm" value="#JAVA_HOME" />
+>>>>>>> origin/detached
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
