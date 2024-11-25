@@ -11,7 +11,6 @@ import java.util.Set;
 import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.createCapabilities;
-import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 public class Window {
@@ -84,7 +83,6 @@ public class Window {
     public void loop() {
         while (!glfwWindowShouldClose(handle)) {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
             logicUpdate();
             renderUpdate();
             glfwSwapBuffers(handle);

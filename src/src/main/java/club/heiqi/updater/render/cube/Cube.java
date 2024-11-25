@@ -106,7 +106,6 @@ public class Cube extends AMesh {
                 0.0f,  1.0f,  0.0f,
         };
         texturePath = "texture/test.png";
-        logger.info("顶点数量: {}", vertices.length);
     }
 
     @Override
