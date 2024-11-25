@@ -50,9 +50,11 @@ public class Scene extends AUpdate {
         float[] proj = new float[16];
         glGetFloatv(GL_PROJECTION_MATRIX, proj);*/
         // endregion
+
         camera = new Camera(this);
         viewMatrix = camera.viewMatrix;
         projectionMatrix = camera.projectionMatrix;
+
         // region 向固定管线传输矩阵
         FloatBuffer buff = BufferUtils.createFloatBuffer(16);
         var view = viewMatrix.get(buff);

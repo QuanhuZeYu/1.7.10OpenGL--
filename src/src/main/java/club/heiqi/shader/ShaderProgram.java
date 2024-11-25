@@ -10,6 +10,7 @@ import java.util.List;
 
 import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
 
 public class ShaderProgram {
