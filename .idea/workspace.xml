@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="实现纹理加载, 加载多张纹理">
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/Shader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/PlaneCube.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/src/main/resources/shader/light.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/VertexShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/VertexShader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/APlane.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Transform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/vertex.vs" afterDir="false" />
     </list>
@@ -38,6 +26,18 @@
     <projectState path="$PROJECT_DIR$/src">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -85,7 +85,7 @@
     "Gradle.src.executor": "Run",
     "Gradle.下载源代码.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "7d90c2a6",
+    "git-widget-placeholder": "efdcb6fe",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Code/MC/ReWork/src/src/main/resources/texture",
     "node.js.detected.package.eslint": "true",

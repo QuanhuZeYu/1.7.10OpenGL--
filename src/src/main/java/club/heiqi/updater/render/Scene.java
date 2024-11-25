@@ -12,8 +12,6 @@ import club.heiqi.updater.render.plane.AMesh;
 import club.heiqi.updater.render.plane.Drawable;
 import club.heiqi.updater.render.plane.Rectangle;
 import club.heiqi.updater.render.plane.Triangle;
-import club.heiqi.updater.render.transform.Camera;
-import club.heiqi.updater.render.transform.Transform;
 import club.heiqi.window.Window;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
@@ -22,7 +20,6 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL20.*;
 
@@ -67,8 +64,8 @@ public class Scene extends AUpdate {
         // endregion
         int id = glGetInteger(GL_CURRENT_PROGRAM);
         glUseProgram(objShaderProgram.programID);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
+//        glEnable(GL_CULL_FACE);
+//        glCullFace(GL_BACK);
         glEnable(GL_DEPTH_TEST);
         objShaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
         objShaderProgram.setUniform(VertexShader.UniformName.Projection.name, projectionMatrix);
@@ -85,9 +82,8 @@ public class Scene extends AUpdate {
         CubeLight light = new CubeLight(window, this);
         Cube cube1 = new Cube(window, this);
         light.camera = camera;
-        cube1.transform.setPosition(-3f, -2f, -1f);
+        cube1.transform.setPosition(0f, 2.5f, 3f);
         cube1.transform.updateMatrix();
-        logger.info("Transform: {}, {}, {}, {}", hash(rectangle.transform), hash(triangle.transform), hash(cube1.transform), hash(light.transform));
 //        drawables.add(rectangle);
 //        drawables.add(triangle);
 //        drawables.add(cube);
@@ -103,6 +99,9 @@ public class Scene extends AUpdate {
         glUseProgram(objShaderProgram.programID);
         for (Drawable drawable : drawables) {
             drawable.draw();
+            if (!(drawable instanceof CubeLight) && drawable instanceof Cube) {
+//                updateCube((Cube) drawable);
+            }
         }
     }
 
@@ -111,7 +110,8 @@ public class Scene extends AUpdate {
         objShaderProgram.setUniform(VertexShader.UniformName.Projection.name, projectionMatrix);
     }
 
-    private int hash(Transform transform) {
-        return System.identityHashCode(transform);
+    private void updateCube(Cube cube) {
+        cube.transform.addRotation(0.01f, 0.01f, 0.01f);
+        cube.transform.updateMatrix();
     }
 }

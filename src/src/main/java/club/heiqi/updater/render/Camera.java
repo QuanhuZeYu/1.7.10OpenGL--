@@ -1,11 +1,12 @@
-package club.heiqi.updater.render.transform;
+package club.heiqi.updater.render;
 
+import club.heiqi.shader.FragShader;
 import club.heiqi.shader.ShaderProgram;
 import club.heiqi.shader.VertexShader;
 import club.heiqi.updater.AUpdate;
 import club.heiqi.updater.controller.KeyInput;
 import club.heiqi.updater.controller.MouseInput;
-import club.heiqi.updater.render.Scene;
+import club.heiqi.updater.render.transform.Transform;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -69,6 +70,8 @@ public class Camera extends AUpdate {
                         up);
         invertViewMatrix.set(viewMatrix).invert();
         shaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
+        shaderProgram.setUniform(FragShader.UniformName.VIEW_POS.name, position);
+
         // region 同时更新固定管线
         temp4x4Buffer = viewMatrix.get(temp4x4Buffer);
         glMatrixMode(GL_MODELVIEW);

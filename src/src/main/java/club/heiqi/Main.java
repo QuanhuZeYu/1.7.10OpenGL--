@@ -15,10 +15,10 @@ public class Main {
         mainWindow.logicUpdaters.add(mainWindow.keyInputController);
         mainWindow.logicUpdaters.add(mainWindow.mouseInputController);
 
-        AUpdate testRender = new TestRender(mainWindow);
+//        AUpdate testRender = new TestRender(mainWindow);
         AUpdate scene = new Scene(mainWindow);
         // 渲染器
-        mainWindow.renders.add(testRender);
+//        mainWindow.renders.add(testRender);
         mainWindow.renders.add(scene);
 
         mainWindow.loop();
