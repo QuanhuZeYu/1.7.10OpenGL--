@@ -79,7 +79,6 @@ public abstract class AMesh implements Drawable{
     public int programID;
     public Scene scene;
     public ShaderProgram objShaderProgram;
-    public Matrix4f viewMatrix;
     public Transform transform;
 
     public AMesh(Window window, Scene scene) {
@@ -87,7 +86,6 @@ public abstract class AMesh implements Drawable{
         this.scene = scene;
         objShaderProgram = scene.objShaderProgram;
         programID = scene.objShaderProgram.programID;
-        viewMatrix = scene.viewMatrix;
         transform = new Transform();
     }
 
@@ -128,7 +126,8 @@ public abstract class AMesh implements Drawable{
             for (String registryName : registryNameAndTexture.keySet()) {
                 Texture texture = registryNameAndTexture.get(registryName);
                 File textureF = getFile(texture.path);
-                createTexture(textureF, textureCoords, texture.registryName, texture.activeTexturePose);
+                boolean success = createTexture(textureF, textureCoords, texture.registryName, texture.activeTexturePose);
+                if (!success) continue;
                 glEnableVertexAttribArray(2);
             }
         }
@@ -204,11 +203,11 @@ public abstract class AMesh implements Drawable{
         return vboID;
     }
 
-    public void createTexture(File textureF, float[] uv, String registryName, int activeTexturePose) {
+    public boolean createTexture(File textureF, float[] uv, String registryName, int activeTexturePose) {
         // 纹理缓存中已存在，则直接返回
         if (TEXTURE_CACHE.containsKey(registryName)) {
-            logger.warn("纹理 {} 已经在缓存当中!", registryName);
-            return;
+//            logger.warn("纹理 {} 已经在缓存当中!", registryName);
+            return false;
         }
 
         IntBuffer width = BufferUtils.createIntBuffer(1);
@@ -230,6 +229,7 @@ public abstract class AMesh implements Drawable{
             TEXTURE_CACHE.put(registryName, texture);
             logger.info(TEXTURE_CACHE.values());
             hasTexture = true;
+            return true;
         } finally {
             if (image != null) {
                 stbi_image_free(image);

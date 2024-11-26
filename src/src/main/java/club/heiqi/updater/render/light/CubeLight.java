@@ -96,7 +96,7 @@ public class CubeLight extends Cube {
 
         glBindVertexArray(vaoID);
         lightShaderProgram.setUniform(VertexShader.UniformName.ModelTrans.name, transform.modelMatrix);
-        lightShaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
+        lightShaderProgram.setUniform(VertexShader.UniformName.View.name, camera.viewMatrix);
         lightShaderProgram.setUniform(VertexShader.UniformName.Projection.name, camera.projectionMatrix);
         drawElement();
         glBindVertexArray(0);

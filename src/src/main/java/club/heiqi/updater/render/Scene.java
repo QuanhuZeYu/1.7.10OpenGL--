@@ -21,11 +21,13 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Scene extends AUpdate {
     public Random rand = new Random();
+    public long lastTime = System.nanoTime();
 
     public ShaderProgram objShaderProgram;
     public ShaderProgram lightShaderProgram;
@@ -77,20 +79,38 @@ public class Scene extends AUpdate {
     }
 
     public void addItem() {
-        AMesh rectangle = new Rectangle(window, this);
-        rectangle.transform.setScale(0.5f);
-        rectangle.transform.updateMatrix();
-        AMesh triangle = new Triangle(window, this);
-        PlaneCube cube = new PlaneCube(window, this);
         CubeLight light = new CubeLight(window, this);
-        Cube cube1 = new Cube(window, this);
         light.camera = camera;
-        cube1.transform.setPosition(0f, 2.5f, 3f);
-        cube1.transform.updateMatrix();
-//        drawables.add(rectangle);
-//        drawables.add(triangle);
-//        drawables.add(cube);
-        drawables.add(cube1);
+        Random rand = new Random();
+        for (int i = 0; i < 1000; i++) {
+            Cube cube = new Cube(window, this);
+
+            // 随机生成半径 r 和角度 theta
+            float r = 16 + rand.nextFloat() * (64 - 16); // 半径范围 [16, 64]
+            float theta = rand.nextFloat() * (float) (2 * Math.PI); // 角度范围 [0, 2π]
+
+            // 转换为笛卡尔坐标
+            float x = r * (float) Math.cos(theta);
+            float z = r * (float) Math.sin(theta);
+            float y = rand.nextFloat() * 10; // 高度随机范围 [0, 10]
+
+            float size = 0.1f + rand.nextFloat() * (3 - 0.1f);
+
+            boolean pm = rand.nextFloat() > 0.5f;
+
+            // 设置 Cube 的位置和旋转
+            cube.transform.addPosition(x, y, z);
+            if (pm)
+                cube.transform.addRotation(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+            else
+                cube.transform.addRotation(-rand.nextFloat(), -rand.nextFloat(), -rand.nextFloat());
+            cube.transform.setScale(size);
+            cube.transform.updateMatrix();
+
+            // 添加到绘制列表
+            drawables.add(cube);
+        }
+        logger.info("立方体添加完毕!");
         drawables.add(light);
     }
 
@@ -106,6 +126,7 @@ public class Scene extends AUpdate {
                 updateCube((Cube) drawable);
             }
         }
+        lastTime = System.nanoTime();
     }
 
     public void updateProjectionMatrix(float width, float height) {
