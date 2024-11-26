@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="实现纹理加载, 加载多张纹理" />
+    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="实现纹理加载, 加载多张纹理">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +99,7 @@
     "Gradle.src.executor": "Run",
     "Gradle.下载源代码.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "5ec4634d",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Code/MC/ReWork/src/src/main/resources/texture",
     "node.js.detected.package.eslint": "true",
@@ -151,6 +161,7 @@
       <updated>1731772721545</updated>
       <workItem from="1731772724040" duration="26406000" />
       <workItem from="1732527561681" duration="13000" />
+      <workItem from="1732606291057" duration="4106000" />
     </task>
     <task id="LOCAL-00001" summary="即时模式进一步探讨, 如何进行缩放 旋转 位移">
       <option name="closed" value="true" />

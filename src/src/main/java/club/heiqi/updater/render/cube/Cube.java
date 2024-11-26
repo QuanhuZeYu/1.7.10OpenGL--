@@ -121,29 +121,38 @@ public class Cube extends AMesh {
             glVertexAttribPointer(1, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
             glEnableVertexAttribArray(1);
         }
-        // 预处理顶点颜色
-//        if (colors == null || colors.length != vertices.length) {
-//            colors = new float[vertices.length];
-//            for (int i = 0; i < (colors.length / 3); i++) {
-//                colors[i] = DEFAULT_COLOR.x;
-//                colors[i + 1] = DEFAULT_COLOR.y;
-//                colors[i + 2] = DEFAULT_COLOR.z;
-//            }
-//        }
-//        colorVBOID = createVBO(colors, GL_STATIC_DRAW);
-//        glVertexAttribPointer(2, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
-//        glEnableVertexAttribArray(2);
-        // 预处理纹理坐标
-//        if (textureCoords == null || textureCoords.length < 2) {
-//            textureCoords = DEFAULT_TEXTURE_COORDS;
-//        }
-//        if (texturePath != null) {
-//            File textureF = new File(texturePath);
-//            createTexture(textureF, textureCoords);
-//            glEnableVertexAttribArray(3);
-//        }
+        // region  ===== 预处理顶点颜色 =====
+        /*if (colors == null || colors.length != vertices.length) {
+            colors = new float[vertices.length];
+            for (int i = 0; i < (colors.length / 3); i++) {
+                colors[i] = DEFAULT_VERTEX_COLOR.x;
+                colors[i + 1] = DEFAULT_VERTEX_COLOR.y;
+                colors[i + 2] = DEFAULT_VERTEX_COLOR.z;
+            }
+        }
+        colorVBOID = createVBO(colors, GL_STATIC_DRAW);
+        glVertexAttribPointer(2, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
+        glEnableVertexAttribArray(2);*/
+        // endregion ===== 预处理顶点颜色 =====
+        // region  ===== 预处理纹理坐标 =====
+        /*if (textureCoords == null || textureCoords.length < 2) {
+            textureCoords = DEFAULT_TEXTURE_COORDS;
+        }
+        if (texturePath != null) {
+            File textureF = new File(texturePath);
+            createTexture(textureF, textureCoords);
+            glEnableVertexAttribArray(3);
+        }*/
+        // endregion ===== 预处理纹理坐标 =====
 
-        if (objectColor == null) objectColor = DEFAULT_OBJECT_COLOR;
+        /*eboID = createVBO(indices, GL_STATIC_DRAW);*/
+
+        // ===== 材质处理 =====
+        setupMaterial();
+        if (materialAmbient == null) materialAmbient = DEFAULT_MATERIAL_AMBIENT;
+        if (materialDiffuse == null) materialDiffuse = DEFAULT_MATERIAL_DIFFUSE;
+        if (materialSpecular == null) materialSpecular = DEFAULT_MATERIAL_SPECULAR;
+        if (shininess == 0) shininess = DEFAULT_SHININESS;
 
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -152,13 +161,7 @@ public class Cube extends AMesh {
 
     @Override
     public void draw() {
-        if (!isSetup) setup();
-        glBindVertexArray(vaoID);
-        if (hasTexture) glBindTexture(GL_TEXTURE_2D, textureID);
-        objShaderProgram.setUniform(FragShader.UniformName.OBJECT_COLOR.name, objectColor);
-        objShaderProgram.setUniform(VertexShader.UniformName.ModelTrans.name, transform.modelMatrix);
-        drawElement();
-        glBindVertexArray(0);
+        super.draw();
     }
 
     @Override

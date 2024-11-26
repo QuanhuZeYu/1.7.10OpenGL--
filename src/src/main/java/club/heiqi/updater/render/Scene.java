@@ -14,6 +14,7 @@ import club.heiqi.updater.render.plane.Rectangle;
 import club.heiqi.updater.render.plane.Triangle;
 import club.heiqi.window.Window;
 import org.joml.Matrix4f;
+import org.joml.Random;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -24,6 +25,8 @@ import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Scene extends AUpdate {
+    public Random rand = new Random();
+
     public ShaderProgram objShaderProgram;
     public ShaderProgram lightShaderProgram;
     public Camera camera;
@@ -100,7 +103,7 @@ public class Scene extends AUpdate {
         for (Drawable drawable : drawables) {
             drawable.draw();
             if (!(drawable instanceof CubeLight) && drawable instanceof Cube) {
-//                updateCube((Cube) drawable);
+                updateCube((Cube) drawable);
             }
         }
     }
@@ -111,7 +114,7 @@ public class Scene extends AUpdate {
     }
 
     private void updateCube(Cube cube) {
-        cube.transform.addRotation(0.01f, 0.01f, 0.01f);
+        cube.transform.addRotation(rand.nextFloat() * 0.01f, rand.nextFloat() * 0.01f, rand.nextFloat() * 0.01f);
         cube.transform.updateMatrix();
     }
 }

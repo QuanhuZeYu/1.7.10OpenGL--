@@ -23,15 +23,6 @@ import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public abstract class AMesh implements Drawable{
-    public static final Vector4f DEFAULT_COLOR = new Vector4f(1.0f, 0.5f, 0.31f, 1.0f);
-    public static final float[] DEFAULT_TEXTURE_COORDS = {
-        0.0f, 0.0f, // 左下角
-        1.0f, 0.0f, // 右下角
-        1.0f, 1.0f, // 右上角
-        0.0f, 1.0f  // 左上角
-    };
-    public static final Vector3f DEFAULT_OBJECT_COLOR = new Vector3f(1.0f, 0.5f, 0.31f);
-
     public long time = System.currentTimeMillis();
     public int eboID;
     public int vaoID;
@@ -41,15 +32,35 @@ public abstract class AMesh implements Drawable{
     public int textureID;
     public int textureCoordVBOID;
 
+    // ========== 静态字段 ==========
+    public static final Vector4f DEFAULT_VERTEX_COLOR = new Vector4f(1.0f, 0.5f, 0.31f, 1.0f);
+    public static final Vector3f DEFAULT_MATERIAL_AMBIENT = new Vector3f(1.0f, 0.5f, 0.31f);
+    public static final Vector3f DEFAULT_MATERIAL_DIFFUSE = new Vector3f(1.0f, 0.5f, 0.31f);
+    public static final Vector3f DEFAULT_MATERIAL_SPECULAR = new Vector3f(0.5f, 0.5f, 0.5f);
+    public static final float DEFAULT_SHININESS = 32.0f;
+    public static final float[] DEFAULT_TEXTURE_COORDS = {
+            0.0f, 0.0f, // 左下角
+            1.0f, 0.0f, // 右下角
+            1.0f, 1.0f, // 右上角
+            0.0f, 1.0f  // 左上角
+    };
+    public static final Vector3f DEFAULT_OBJECT_COLOR = new Vector3f(1.0f, 0.5f, 0.31f);
+    // ==========          ==========
+
     public float[] vertices;
     public float[] normals;
     public float[] colors;
     public float[] textureCoords;
     public int[] indices;
     public String texturePath;
+    // ===== 材质属性 =====
+    public Vector3f materialAmbient;
+    public Vector3f materialDiffuse;
+    public Vector3f materialSpecular;
+    public float shininess;
+    // =====         =====
     public boolean isSetup = false;
     public boolean hasTexture = false;
-    public Vector3f objectColor;
 
     public Window window;
     public int programID;
@@ -83,9 +94,9 @@ public abstract class AMesh implements Drawable{
         if (colors == null || colors.length != vertices.length) {
             colors = new float[vertices.length];
             for (int i = 0; i < (colors.length / 3); i++) {
-                colors[i] = DEFAULT_COLOR.x;
-                colors[i + 1] = DEFAULT_COLOR.y;
-                colors[i + 2] = DEFAULT_COLOR.z;
+                colors[i] = DEFAULT_VERTEX_COLOR.x;
+                colors[i + 1] = DEFAULT_VERTEX_COLOR.y;
+                colors[i + 2] = DEFAULT_VERTEX_COLOR.z;
             }
         }
         colorVBOID = createVBO(colors, GL_STATIC_DRAW);
@@ -103,7 +114,12 @@ public abstract class AMesh implements Drawable{
 
         eboID = createVBO(indices, GL_STATIC_DRAW);
 
-        if (objectColor == null) objectColor = DEFAULT_OBJECT_COLOR;
+        // ===== 材质处理 =====
+        setupMaterial();
+        if (materialAmbient == null) materialAmbient = DEFAULT_MATERIAL_AMBIENT;
+        if (materialDiffuse == null) materialDiffuse = DEFAULT_MATERIAL_DIFFUSE;
+        if (materialSpecular == null) materialSpecular = DEFAULT_MATERIAL_SPECULAR;
+        if (shininess == 0) shininess = DEFAULT_SHININESS;
 
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -115,8 +131,12 @@ public abstract class AMesh implements Drawable{
         if (!isSetup) setup();
         glBindVertexArray(vaoID);
         if (hasTexture) glBindTexture(GL_TEXTURE_2D, textureID);
-        objShaderProgram.setUniform(FragShader.UniformName.OBJECT_COLOR.name, objectColor);
         objShaderProgram.setUniform(VertexShader.UniformName.ModelTrans.name, transform.modelMatrix);
+        // 设置材质
+        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_AMBIENT.name, materialAmbient);
+        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_DIFFUSE.name, materialDiffuse);
+        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_SPECULAR.name, materialSpecular);
+        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_SHININESS.name, shininess);
         drawElement();
         glBindVertexArray(0);
     }
@@ -177,5 +197,9 @@ public abstract class AMesh implements Drawable{
                 stbi_image_free(image);
             }
         }
+    }
+
+    public void setupMaterial() {
+
     }
 }

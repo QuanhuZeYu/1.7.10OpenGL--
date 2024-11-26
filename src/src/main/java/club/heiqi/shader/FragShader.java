@@ -8,10 +8,16 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class FragShader extends Shader {
     public enum UniformName {
-        OBJECT_COLOR("objectColor"),
-        LIGHT_COLOR("lightColor"),
-        LIGHT_POS("lightPos"),
-        VIEW_POS("viewPos");
+        VIEW_POS("viewPos"),
+        LIGHT_AMBIENT("light.ambient"),
+        LIGHT_DIFFUSE("light.diffuse"),
+        LIGHT_SPECULAR("light.specular"),
+        LIGHT_POS("light.position"),
+        MATERIAL_AMBIENT("material.ambient"),
+        MATERIAL_DIFFUSE("material.diffuse"),
+        MATERIAL_SPECULAR("material.specular"),
+        MATERIAL_SHININESS("material.shininess"),
+        ;
 
         public final String name;
         UniformName(String name) {
