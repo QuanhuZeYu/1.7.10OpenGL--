@@ -84,4 +84,17 @@ public class ShaderProgram {
             logger.error("设置uniform: {} 失败: ", uniformName, e);
         }
     }
+
+    public void setUniform(String uniformName, int value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            int location = glGetUniformLocation(programID, uniformName);
+            if (location == -1) {
+                throw new RuntimeException("无法找到uniform: " + uniformName);
+            }
+            glUniform1i(location, value);
+        } catch (Exception e) {
+            // 记录异常信息，可以根据需要调整日志级别
+            logger.error("设置uniform: {} 失败: ", uniformName, e);
+        }
+    }
 }

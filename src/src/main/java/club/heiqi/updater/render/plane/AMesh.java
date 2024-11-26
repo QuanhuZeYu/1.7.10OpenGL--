@@ -16,7 +16,11 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
+import static club.heiqi.loger.MyLog.logger;
+import static club.heiqi.util.FileManager.getFile;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
@@ -29,7 +33,6 @@ public abstract class AMesh implements Drawable{
     public int vertexVBOID;
     public int normalVBOID;
     public int colorVBOID;
-    public int textureID;
     public int textureCoordVBOID;
 
     // ========== 静态字段 ==========
@@ -38,6 +41,12 @@ public abstract class AMesh implements Drawable{
     public static final Vector3f DEFAULT_MATERIAL_DIFFUSE = new Vector3f(1.0f, 0.5f, 0.31f);
     public static final Vector3f DEFAULT_MATERIAL_SPECULAR = new Vector3f(0.5f, 0.5f, 0.5f);
     public static final float DEFAULT_SHININESS = 32.0f;
+    /**
+     * 纹理缓存, 只存放注册完毕的纹理, 且全局共享; {注册名: 纹理对象}
+     */
+    public static final Map<String, Texture> TEXTURE_CACHE = new HashMap<>();
+    public static final String DEFAULT_TEXTURE_PATH = "texture/test.png";
+    public static final String DEFAULT_TEXTURE_REGISTRY_NAME = "default";
     public static final float[] DEFAULT_TEXTURE_COORDS = {
             0.0f, 0.0f, // 左下角
             1.0f, 0.0f, // 右下角
@@ -52,14 +61,18 @@ public abstract class AMesh implements Drawable{
     public float[] colors;
     public float[] textureCoords;
     public int[] indices;
-    public String texturePath;
+    /**
+     * 纹理注册表, 纹理的注册名称为键, 纹理对象为值, 仅存放当前对象的纹理, 请不要在渲染时使用该字段! 它的注册ID可能为空/0
+     */
+    public Map<String, Texture> registryNameAndTexture = new HashMap<>();
     // ===== 材质属性 =====
     public Vector3f materialAmbient;
-    public Vector3f materialDiffuse;
-    public Vector3f materialSpecular;
+    public int materialDiffusePos = 0;
+    public int materialSpecularPos = 1;
     public float shininess;
     // =====         =====
     public boolean isSetup = false;
+    public boolean useEBO = false;
     public boolean hasTexture = false;
 
     public Window window;
@@ -90,8 +103,8 @@ public abstract class AMesh implements Drawable{
             glVertexAttribPointer(1, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
             glEnableVertexAttribArray(1);
         }
-        // 预处理顶点颜色
-        if (colors == null || colors.length != vertices.length) {
+        // region  ===== 预处理顶点颜色 =====
+        /*if (colors == null || colors.length != vertices.length) {
             colors = new float[vertices.length];
             for (int i = 0; i < (colors.length / 3); i++) {
                 colors[i] = DEFAULT_VERTEX_COLOR.x;
@@ -101,24 +114,34 @@ public abstract class AMesh implements Drawable{
         }
         colorVBOID = createVBO(colors, GL_STATIC_DRAW);
         glVertexAttribPointer(2, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
-        glEnableVertexAttribArray(2);
-        // 预处理纹理坐标
+        glEnableVertexAttribArray(2);*/
+        // endregion ===== 预处理顶点颜色 =====
+        // region  ===== 预处理纹理 =====
         if (textureCoords == null || textureCoords.length < 2) {
-            textureCoords = DEFAULT_TEXTURE_COORDS;
+            textureCoords = DEFAULT_TEXTURE_COORDS; // 使用 0,0 1,0 1,1 0,1 填充矩形纹理
         }
-        if (texturePath != null) {
-            File textureF = new File(texturePath);
-            createTexture(textureF, textureCoords);
-            glEnableVertexAttribArray(3);
+        if (registryNameAndTexture.isEmpty()) {
+            File textureF = getFile(DEFAULT_TEXTURE_PATH);
+            createTexture(textureF, textureCoords, DEFAULT_TEXTURE_REGISTRY_NAME, GL_TEXTURE0);
+            glEnableVertexAttribArray(2);
+        } else {
+            for (String registryName : registryNameAndTexture.keySet()) {
+                Texture texture = registryNameAndTexture.get(registryName);
+                File textureF = getFile(texture.path);
+                createTexture(textureF, textureCoords, texture.registryName, texture.activeTexturePose);
+                glEnableVertexAttribArray(2);
+            }
         }
+        // endregion ===== 预处理纹理 =====
 
-        eboID = createVBO(indices, GL_STATIC_DRAW);
+        if (indices != null)  {
+            eboID = createVBO(indices, GL_STATIC_DRAW);
+            useEBO = true;
+        }
 
         // ===== 材质处理 =====
         setupMaterial();
         if (materialAmbient == null) materialAmbient = DEFAULT_MATERIAL_AMBIENT;
-        if (materialDiffuse == null) materialDiffuse = DEFAULT_MATERIAL_DIFFUSE;
-        if (materialSpecular == null) materialSpecular = DEFAULT_MATERIAL_SPECULAR;
         if (shininess == 0) shininess = DEFAULT_SHININESS;
 
         glBindVertexArray(0);
@@ -130,19 +153,25 @@ public abstract class AMesh implements Drawable{
     public void draw() {
         if (!isSetup) setup();
         glBindVertexArray(vaoID);
-        if (hasTexture) glBindTexture(GL_TEXTURE_2D, textureID);
+        if (hasTexture) {
+            for (String registryName : registryNameAndTexture.keySet()) {
+                useTexture(registryName);
+            }
+        }
         objShaderProgram.setUniform(VertexShader.UniformName.ModelTrans.name, transform.modelMatrix);
         // 设置材质
-        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_AMBIENT.name, materialAmbient);
-        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_DIFFUSE.name, materialDiffuse);
-        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_SPECULAR.name, materialSpecular);
+        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_DIFFUSE.name, materialDiffusePos);
+        objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_SPECULAR.name, materialSpecularPos);
         objShaderProgram.setUniform(FragShader.UniformName.MATERIAL_SHININESS.name, shininess);
         drawElement();
         glBindVertexArray(0);
     }
 
     public void drawElement() {
-        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+        if (useEBO)
+            glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+        else
+            glDrawArrays(GL_TRIANGLES, 0, vertices.length / 3);
     }
 
     public int createVAO() {
@@ -175,7 +204,13 @@ public abstract class AMesh implements Drawable{
         return vboID;
     }
 
-    public void createTexture(File textureF, float[] uv) {
+    public void createTexture(File textureF, float[] uv, String registryName, int activeTexturePose) {
+        // 纹理缓存中已存在，则直接返回
+        if (TEXTURE_CACHE.containsKey(registryName)) {
+            logger.warn("纹理 {} 已经在缓存当中!", registryName);
+            return;
+        }
+
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
@@ -183,7 +218,7 @@ public abstract class AMesh implements Drawable{
         try {
             textureCoordVBOID = createVBO(uv, GL_STATIC_DRAW);
             glVertexAttribPointer(2, 2, GL_FLOAT, false, 2 * Float.BYTES, 0);
-            textureID = glGenTextures();
+            int textureID = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, textureID);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(), height.get(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -191,12 +226,21 @@ public abstract class AMesh implements Drawable{
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             glGenerateMipmap(GL_TEXTURE_2D);
+            Texture texture = new Texture(textureF.getAbsolutePath(), registryName, textureID, activeTexturePose);
+            TEXTURE_CACHE.put(registryName, texture);
+            logger.info(TEXTURE_CACHE.values());
             hasTexture = true;
         } finally {
             if (image != null) {
                 stbi_image_free(image);
             }
         }
+    }
+
+    public void useTexture(String registryName) {
+        Texture texture = TEXTURE_CACHE.get(registryName);
+        glActiveTexture(texture.activeTexturePose);
+        glBindTexture(GL_TEXTURE_2D, texture.textureID);
     }
 
     public void setupMaterial() {

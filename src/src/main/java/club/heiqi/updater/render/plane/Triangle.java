@@ -23,7 +23,6 @@ public class Triangle extends AMesh {
         indices = new int[]{
                 0, 1, 2
         };
-        texturePath = "texture/test2.jpg";
     }
 
     @Override

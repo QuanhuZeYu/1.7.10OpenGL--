@@ -36,7 +36,6 @@ public class Rectangle extends AMesh {
                 1.0f, 1.0f, // 右上角
                 0.0f, 1.0f  // 左上角
         };
-        texturePath = "texture/test.png";
 
         File texture = FileManager.getFile("texture/test.png");
         vaoID = createVAO();
@@ -48,7 +47,7 @@ public class Rectangle extends AMesh {
         colorVBOID = createVBO(colors, GL_STATIC_DRAW);
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
 
-        createTexture(texture, textureCoords);
+        /*createTexture(texture, textureCoords);*/
 
         eboID = createVBO(indices, GL_STATIC_DRAW);
 

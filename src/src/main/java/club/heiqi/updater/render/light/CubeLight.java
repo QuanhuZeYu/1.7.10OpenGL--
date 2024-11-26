@@ -26,7 +26,6 @@ public class CubeLight extends Cube {
 
     public CubeLight(Window window, Scene scene) {
         super(window, scene);
-        texturePath = null;
         lightShaderProgram = scene.lightShaderProgram;
         transform.setPosition(0f, 0f, 0f);
         transform.updateMatrix();
@@ -76,8 +75,6 @@ public class CubeLight extends Cube {
         // ===== 材质处理 =====
         setupMaterial();
         if (materialAmbient == null) materialAmbient = DEFAULT_MATERIAL_AMBIENT;
-        if (materialDiffuse == null) materialDiffuse = DEFAULT_MATERIAL_DIFFUSE;
-        if (materialSpecular == null) materialSpecular = DEFAULT_MATERIAL_SPECULAR;
         if (shininess == 0) shininess = DEFAULT_SHININESS;
 
         glBindVertexArray(0);
@@ -98,7 +95,6 @@ public class CubeLight extends Cube {
         glUseProgram(lightShaderProgram.programID);
 
         glBindVertexArray(vaoID);
-        if (hasTexture) glBindTexture(GL_TEXTURE_2D, textureID);
         lightShaderProgram.setUniform(VertexShader.UniformName.ModelTrans.name, transform.modelMatrix);
         lightShaderProgram.setUniform(VertexShader.UniformName.View.name, viewMatrix);
         lightShaderProgram.setUniform(VertexShader.UniformName.Projection.name, camera.projectionMatrix);
