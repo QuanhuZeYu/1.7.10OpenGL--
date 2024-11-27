@@ -146,8 +146,8 @@ public class Cube extends AMesh {
                 0.0f,  0.0f,
                 0.0f,  1.0f
         };
-        Texture boxDiffuse = new Texture("texture/boxDiff.png", "boxDiff", GL_TEXTURE0);
-        Texture boxSpecular = new Texture("texture/boxSpec.png", "boxSpec", GL_TEXTURE1);
+        Texture boxDiffuse = new Texture("texture/boxDiff.png", "boxDiff", Texture.TexturePos.DIFFUSE.pos);
+        Texture boxSpecular = new Texture("texture/boxSpec.png", "boxSpec", Texture.TexturePos.SPECULAR.pos);
         registryNameAndTexture.put(boxDiffuse.registryName, boxDiffuse);
         registryNameAndTexture.put(boxSpecular.registryName, boxSpecular);
     }

@@ -56,6 +56,8 @@ public class Scene extends AUpdate {
         glGetFloatv(GL_PROJECTION_MATRIX, proj);*/
         // endregion
         camera = new Camera(this);
+        camera.trans.setPosition(0, 30, 0);
+        camera.trans.updateMatrix();
         viewMatrix = camera.viewMatrix;
         projectionMatrix = camera.projectionMatrix;
         // region 向固定管线传输矩阵
@@ -86,7 +88,7 @@ public class Scene extends AUpdate {
             Cube cube = new Cube(window, this);
 
             // 随机生成半径 r 和角度 theta
-            float r = 16 + rand.nextFloat() * (64 - 16); // 半径范围 [16, 64]
+            float r = 10 + rand.nextFloat() * (64 - 10); // 半径范围 [16, 64]
             float theta = rand.nextFloat() * (float) (2 * Math.PI); // 角度范围 [0, 2π]
 
             // 转换为笛卡尔坐标

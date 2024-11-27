@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="更新笔记">
+    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="调整结构， 批量生成Cube进入场景">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +161,7 @@
       <updated>1731772721545</updated>
       <workItem from="1731772724040" duration="26406000" />
       <workItem from="1732527561681" duration="13000" />
-      <workItem from="1732606291057" duration="20219000" />
+      <workItem from="1732606291057" duration="27398000" />
     </task>
     <task id="LOCAL-00001" summary="即时模式进一步探讨, 如何进行缩放 旋转 位移">
       <option name="closed" value="true" />
@@ -231,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732623116704</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="调整结构， 批量生成Cube进入场景">
+      <option name="closed" value="true" />
+      <created>1732643090362</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732643090362</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +270,7 @@
     <MESSAGE value="实现Phong光照模型" />
     <MESSAGE value="实现Phong光照下的贴图" />
     <MESSAGE value="更新笔记" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新笔记" />
+    <MESSAGE value="调整结构， 批量生成Cube进入场景" />
+    <option name="LAST_COMMIT_MESSAGE" value="调整结构， 批量生成Cube进入场景" />
   </component>
 </project>

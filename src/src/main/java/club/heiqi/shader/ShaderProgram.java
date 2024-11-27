@@ -2,6 +2,7 @@ package club.heiqi.shader;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.FloatBuffer;
@@ -53,6 +54,19 @@ public class ShaderProgram {
             FloatBuffer buffer = stack.mallocFloat(16);
             matrix.get(buffer);
             glUniformMatrix4fv(location, false, buffer);
+        } catch (Exception e) {
+            // 记录异常信息，可以根据需要调整日志级别
+            logger.error("设置uniform: {} 失败: ", uniformName, e);
+        }
+    }
+
+    public void setUniform(String uniformName, Vector4f vector4f) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            int location = glGetUniformLocation(programID, uniformName);
+            if (location == -1) {
+                throw new RuntimeException("无法找到uniform: " + uniformName);
+            }
+            glUniform4f(location, vector4f.x, vector4f.y, vector4f.z, vector4f.w);
         } catch (Exception e) {
             // 记录异常信息，可以根据需要调整日志级别
             logger.error("设置uniform: {} 失败: ", uniformName, e);

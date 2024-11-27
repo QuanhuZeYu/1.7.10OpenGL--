@@ -127,8 +127,6 @@ public abstract class AMesh implements Drawable{
                 Texture texture = registryNameAndTexture.get(registryName);
                 File textureF = getFile(texture.path);
                 boolean success = createTexture(textureF, textureCoords, texture.registryName, texture.activeTexturePose);
-                if (!success) continue;
-                glEnableVertexAttribArray(2);
             }
         }
         // endregion ===== 预处理纹理 =====
@@ -204,9 +202,13 @@ public abstract class AMesh implements Drawable{
     }
 
     public boolean createTexture(File textureF, float[] uv, String registryName, int activeTexturePose) {
-        // 纹理缓存中已存在，则直接返回
+        // 纹理缓存中已存在，从缓存中取出ID进行绑定
         if (TEXTURE_CACHE.containsKey(registryName)) {
-//            logger.warn("纹理 {} 已经在缓存当中!", registryName);
+            textureCoordVBOID = createVBO(uv, GL_STATIC_DRAW);
+            glVertexAttribPointer(2, 2, GL_FLOAT, false, 2 * Float.BYTES, 0);
+            int textureID = TEXTURE_CACHE.get(registryName).textureID;
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glEnableVertexAttribArray(2);
             return false;
         }
 
@@ -229,6 +231,7 @@ public abstract class AMesh implements Drawable{
             TEXTURE_CACHE.put(registryName, texture);
             logger.info(TEXTURE_CACHE.values());
             hasTexture = true;
+            glEnableVertexAttribArray(2);
             return true;
         } finally {
             if (image != null) {

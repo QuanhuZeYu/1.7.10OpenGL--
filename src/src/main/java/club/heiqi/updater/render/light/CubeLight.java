@@ -8,6 +8,7 @@ import club.heiqi.updater.render.cube.Cube;
 import club.heiqi.updater.render.Camera;
 import club.heiqi.window.Window;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -18,11 +19,21 @@ public class CubeLight extends Cube {
     public static final Vector3f DEFAULT_DIFFUSE_COLOR = new Vector3f(0.5f).mul(DEFAULT_LIGHT_COLOR);
     public static final Vector3f DEFAULT_AMBIENT_COLOR = new Vector3f(0.0f).mul(DEFAULT_DIFFUSE_COLOR);
     public static final Vector3f DEFAULT_SPECULAR_COLOR = new Vector3f(1.0f);
+    public static final float    DEFAULT_LIGHT_CONSTANT = 1.0f;
+    public static final float    DEFAULT_LIGHT_LINEAR = 0.07f;
+    public static final float    DEFAULT_LIGHT_QUADRATIC = 0.017f;
 
     public ShaderProgram lightShaderProgram;
     public Camera camera;
 
     public Vector3f lightColor;
+    public Vector4f lightDirection;
+    public Vector3f lightDiffuseColor;
+    public Vector3f lightAmbientColor;
+    public Vector3f lightSpecularColor;
+    public float lightConstant;
+    public float lightLinear;
+    public float lightQuadratic;
 
     public CubeLight(Window window, Scene scene) {
         super(window, scene);
@@ -77,8 +88,18 @@ public class CubeLight extends Cube {
         if (materialAmbient == null) materialAmbient = DEFAULT_MATERIAL_AMBIENT;
         if (shininess == 0) shininess = DEFAULT_SHININESS;
 
+        // region   ===== 光源属性处理 =====
+        if (lightDiffuseColor == null) lightDiffuseColor = DEFAULT_DIFFUSE_COLOR;
+        if (lightAmbientColor == null) lightAmbientColor = DEFAULT_AMBIENT_COLOR;
+        if (lightSpecularColor == null) lightSpecularColor = DEFAULT_SPECULAR_COLOR;
+        if (lightConstant == 0) lightConstant = DEFAULT_LIGHT_CONSTANT;
+        if (lightLinear == 0) lightLinear = DEFAULT_LIGHT_LINEAR;
+        if (lightQuadratic == 0) lightQuadratic = DEFAULT_LIGHT_QUADRATIC;
+        // endregion===== 光源属性处理 =====
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+//        lightDirection = new Vector4f(-0.2f, -1.0f, -0.3f, 0f);
         isSetup = true;
     }
 
@@ -88,10 +109,18 @@ public class CubeLight extends Cube {
         if (lightColor == null) lightColor = DEFAULT_LIGHT_COLOR;
 
         glUseProgram(objShaderProgram.programID);
-        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_AMBIENT.name, DEFAULT_AMBIENT_COLOR);
-        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_DIFFUSE.name, DEFAULT_DIFFUSE_COLOR);
-        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_SPECULAR.name, DEFAULT_SPECULAR_COLOR);
-        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_POS.name, transform.position);
+        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_AMBIENT.name, lightAmbientColor);
+        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_DIFFUSE.name, lightDiffuseColor);
+        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_SPECULAR.name, lightSpecularColor);
+        if (lightDirection != null) {
+            objShaderProgram.setUniform(FragShader.UniformName.LIGHT_POS.name, lightDirection);
+        } else {
+            Vector4f lightPos = new Vector4f(transform.position.x, transform.position.y, transform.position.z, 1f);
+            objShaderProgram.setUniform(FragShader.UniformName.LIGHT_POS.name, lightPos);
+        }
+        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_CONSTANT.name, lightConstant);
+        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_LINEAR.name, lightLinear);
+        objShaderProgram.setUniform(FragShader.UniformName.LIGHT_QUADRATIC.name, lightQuadratic);
         glUseProgram(lightShaderProgram.programID);
 
         glBindVertexArray(vaoID);
