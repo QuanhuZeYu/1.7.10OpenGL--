@@ -70,9 +70,10 @@ public class Window {
         glfwSetWindowSizeCallback(handle, (window, width, height) -> {
             this.w = width;
             this.h = height;
+            logger.info("窗口大小已更新为 {}: {}", width, height);
             for (AUpdate render : renders) {
                 if (render instanceof Scene) {
-                    ((Scene) render).updateProjectionMatrix(width, height);
+                    ((Scene) render).needUpdateProjectionMatrix = true;
                     break;
                 }
             }

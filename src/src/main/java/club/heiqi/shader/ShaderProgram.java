@@ -61,7 +61,7 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, Vector4f vector4f) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
+        try {
             int location = glGetUniformLocation(programID, uniformName);
             if (location == -1) {
                 throw new RuntimeException("无法找到uniform: " + uniformName);
@@ -74,7 +74,7 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, Vector3f vector3f) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
+        try {
             int location = glGetUniformLocation(programID, uniformName);
             if (location == -1) {
                 throw new RuntimeException("无法找到uniform: " + uniformName);
@@ -87,7 +87,7 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, float value) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
+        try {
             int location = glGetUniformLocation(programID, uniformName);
             if (location == -1) {
                 throw new RuntimeException("无法找到uniform: " + uniformName);
@@ -100,12 +100,25 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, int value) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
+        try {
             int location = glGetUniformLocation(programID, uniformName);
             if (location == -1) {
                 throw new RuntimeException("无法找到uniform: " + uniformName);
             }
             glUniform1i(location, value);
+        } catch (Exception e) {
+            // 记录异常信息，可以根据需要调整日志级别
+            logger.error("设置uniform: {} 失败: ", uniformName, e);
+        }
+    }
+
+    public void setUniform(String uniformName, boolean value) {
+        try {
+            int location = glGetUniformLocation(programID, uniformName);
+            if (location == -1) {
+                throw new RuntimeException("无法找到uniform: " + uniformName);
+            }
+            glUniform1i(location, value ? 1 : 0);
         } catch (Exception e) {
             // 记录异常信息，可以根据需要调整日志级别
             logger.error("设置uniform: {} 失败: ", uniformName, e);

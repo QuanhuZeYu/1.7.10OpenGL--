@@ -6,12 +6,9 @@ import club.heiqi.shader.ShaderProgram;
 import club.heiqi.shader.VertexShader;
 import club.heiqi.updater.AUpdate;
 import club.heiqi.updater.render.cube.Cube;
-import club.heiqi.updater.render.cube.PlaneCube;
+import club.heiqi.updater.render.light.CamLight;
 import club.heiqi.updater.render.light.CubeLight;
-import club.heiqi.updater.render.plane.AMesh;
 import club.heiqi.updater.render.plane.Drawable;
-import club.heiqi.updater.render.plane.Rectangle;
-import club.heiqi.updater.render.plane.Triangle;
 import club.heiqi.window.Window;
 import org.joml.Matrix4f;
 import org.joml.Random;
@@ -28,6 +25,7 @@ import static org.lwjgl.opengl.GL20.*;
 public class Scene extends AUpdate {
     public Random rand = new Random();
     public long lastTime = System.nanoTime();
+    public boolean needUpdateProjectionMatrix = false;
 
     public ShaderProgram objShaderProgram;
     public ShaderProgram lightShaderProgram;
@@ -37,6 +35,7 @@ public class Scene extends AUpdate {
     public Matrix4f projectionMatrix;
 
     public List<Drawable> drawables = new ArrayList<>();
+    public List<AUpdate> updates = new ArrayList<>();
 
     public Scene(Window window) {
         super(window);
@@ -56,8 +55,8 @@ public class Scene extends AUpdate {
         glGetFloatv(GL_PROJECTION_MATRIX, proj);*/
         // endregion
         camera = new Camera(this);
-        camera.trans.setPosition(0, 30, 0);
-        camera.trans.updateMatrix();
+        camera.transform.setPosition(0, 0, 0);
+        camera.transform.updateMatrix();
         viewMatrix = camera.viewMatrix;
         projectionMatrix = camera.projectionMatrix;
         // region 向固定管线传输矩阵
@@ -82,6 +81,7 @@ public class Scene extends AUpdate {
 
     public void addItem() {
         CubeLight light = new CubeLight(window, this);
+        CamLight camLight = new CamLight(window, this);
         light.camera = camera;
         Random rand = new Random();
         for (int i = 0; i < 1000; i++) {
@@ -94,7 +94,7 @@ public class Scene extends AUpdate {
             // 转换为笛卡尔坐标
             float x = r * (float) Math.cos(theta);
             float z = r * (float) Math.sin(theta);
-            float y = rand.nextFloat() * 10; // 高度随机范围 [0, 10]
+            float y = -10 + rand.nextFloat() * (10 + 10); // 高度随机范围 [0, 10]
 
             float size = 0.1f + rand.nextFloat() * (3 - 0.1f);
 
@@ -113,12 +113,13 @@ public class Scene extends AUpdate {
             drawables.add(cube);
         }
         logger.info("立方体添加完毕!");
-        drawables.add(light);
+//        drawables.add(light);
+        drawables.add(camLight);
     }
 
     @Override
     public void update() {
-        camera.update();
+        camera.update(); updateProjectionMatrix();
         int id = glGetInteger(GL_CURRENT_PROGRAM);
         if (id != objShaderProgram.programID) glUseProgram(objShaderProgram.programID);
         glUseProgram(objShaderProgram.programID);
@@ -131,9 +132,14 @@ public class Scene extends AUpdate {
         lastTime = System.nanoTime();
     }
 
-    public void updateProjectionMatrix(float width, float height) {
-        projectionMatrix = projectionMatrix.perspective(90.0f, width / height, 0.1f, 1000.0f);
+    public void updateProjectionMatrix() {
+        if (!needUpdateProjectionMatrix) return;
+        projectionMatrix = projectionMatrix.perspective(camera.fov, (float) window.w / window.h, camera.zNear, camera.zFar);
+        glUseProgram(objShaderProgram.programID);
         objShaderProgram.setUniform(VertexShader.UniformName.Projection.name, projectionMatrix);
+        camera.updateViewMatrix();
+        logger.info("投影矩阵: {}", projectionMatrix);
+        needUpdateProjectionMatrix = false;
     }
 
     private void updateCube(Cube cube) {

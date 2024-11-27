@@ -18,7 +18,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Camera extends AUpdate {
-    public Transform trans;
+    public Transform transform;
     public Vector3f position;
     public Quaternionf rotation;
     public Vector3f up, right, front;
@@ -30,6 +30,9 @@ public class Camera extends AUpdate {
 
     public float yaw = 0.0f; // 临时变量, 每帧都会更新
     public float pitch = 0.0f;
+    public float fov = 45.0f;
+    public float zNear = 0.1f;
+    public float zFar = 1000.0f;
 
     public ShaderProgram shaderProgram;
     public KeyInput keyInput;
@@ -43,13 +46,13 @@ public class Camera extends AUpdate {
         shaderProgram = scene.objShaderProgram;
         this.keyInput = (KeyInput) scene.window.keyInputController;
         this.mouseInput = (MouseInput) scene.window.mouseInputController;
-        trans = new Transform();
-        trans.position = new Vector3f(0, 0, 1);
-        position = trans.position;
-        rotation = trans.quaternionf;
+        transform = new Transform();
+        transform.position = new Vector3f(0, 0, 1);
+        position = transform.position;
+        rotation = transform.quaternionf;
         viewMatrix = new Matrix4f();
         invertViewMatrix = new Matrix4f();
-        projectionMatrix = projectionMatrix.perspective(45.0f, window.w / (float) window.h, 0.1f, 1000.0f);
+        projectionMatrix = projectionMatrix.perspective(fov, window.w / (float) window.h, zNear, zFar);
         tempQuat = new Quaternionf();
         front = new Vector3f();
         right = new Vector3f();
