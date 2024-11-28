@@ -16,7 +16,7 @@ public class CamLight extends ALight implements Drawable {
     @Override
     public void setup() {
         Vector3f dir = camera.front;
-        lightDirection.set(dir.x, dir.y, dir.z, 1);
+        lightDirection.set(dir.x, dir.y, dir.z);
         initLightProp();
         initSpotLightProp();
         isSetup = true;
@@ -25,8 +25,8 @@ public class CamLight extends ALight implements Drawable {
     @Override
     public void draw() {
         Vector3f dir = camera.front;
-        lightDirection.set(dir.x, dir.y, dir.z, 1);
-        lightPosition.set(camera.position.x, camera.position.y, camera.position.z, 1);
+        lightDirection.set(dir.x, dir.y, dir.z);
+        lightPosition.set(camera.position.x, camera.position.y, camera.position.z);
         update();
     }
 }

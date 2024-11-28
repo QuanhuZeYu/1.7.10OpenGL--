@@ -10,11 +10,12 @@ repositories {
 }
 
 ext {
-    jomlVersion = "1.10.8"
     log4jVersion = "2.24.1"
-
+    jomlVersion = "1.10.8"
     lwjglVersion = "3.3.4"
-    lwjglNatives = "natives-windows"
+    imguiVersion = "1.87.6"
+    
+    natives = "natives-windows"
 }
 
 dependencies {
@@ -31,11 +32,16 @@ dependencies {
     implementation "org.lwjgl:lwjgl-stb:${lwjglVersion}"
     implementation "org.lwjgl:lwjgl-assimp:${lwjglVersion}"
 
-    runtimeOnly "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
-    runtimeOnly "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}"
-    runtimeOnly "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}"
-    runtimeOnly "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
-    runtimeOnly "org.lwjgl:lwjgl-assimp:${lwjglVersion}:${lwjglNatives}"
+    implementation "io.github.spair:imgui-java-lwjgl3:1.87.6"
+
+    runtimeOnly "org.lwjgl:lwjgl:${lwjglVersion}:${natives}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${natives}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${natives}"
+    runtimeOnly "org.lwjgl:lwjgl-stb:${lwjglVersion}:${natives}"
+    runtimeOnly "org.lwjgl:lwjgl-assimp:${lwjglVersion}:${natives}"
+
+    runtimeOnly "io.github.spair:imgui-java-binding:${imguiVersion}"
+    runtimeOnly "io.github.spair:imgui-java-natives-windows:${imguiVersion}"
 }
 
 test {

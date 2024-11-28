@@ -33,7 +33,7 @@ public class MouseInput extends AUpdate {
         glfwSetCursorEnterCallback(windowHandle, (handle, entered) -> inWindow = entered);
         glfwSetCursorPosCallback(windowHandle, (window, xpos, ypos) -> {
             if (isCursorLocked) {
-                glfwSetCursorPos(windowHandle, (double) this.window.w / 2, (double) this.window.h / 2);
+                glfwSetCursorPos(windowHandle, (double) this.window.width / 2, (double) this.window.height / 2);
             }
             deltaX = 0;
             deltaY = 0;
@@ -43,8 +43,8 @@ public class MouseInput extends AUpdate {
                 deltaX = mouseX - preMouseX;
                 deltaY = mouseY - preMouseY;
             }
-            preMouseX = isCursorLocked? (double) this.window.w / 2 : mouseX;
-            preMouseY = isCursorLocked? (double) this.window.h / 2 : mouseY;
+            preMouseX = isCursorLocked? (double) this.window.width / 2 : mouseX;
+            preMouseY = isCursorLocked? (double) this.window.height / 2 : mouseY;
         });
         glfwSetMouseButtonCallback(windowHandle, (window, button, action, mods) -> {
             switch (button) {

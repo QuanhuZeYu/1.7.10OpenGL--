@@ -9,11 +9,8 @@ import club.heiqi.updater.render.Scene;
 import club.heiqi.updater.render.transform.Transform;
 import club.heiqi.window.Window;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 import static club.heiqi.loger.MyLog.logger;
-import static org.lwjgl.opengl.GL11.glGetInteger;
-import static org.lwjgl.opengl.GL20.GL_CURRENT_PROGRAM;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 
 public class ALight extends AUpdate {
@@ -24,7 +21,8 @@ public class ALight extends AUpdate {
     public static final float    DEFAULT_LIGHT_CONSTANT = 1.0f;
     public static final float    DEFAULT_LIGHT_LINEAR = 0.09f;
     public static final float    DEFAULT_LIGHT_QUADRATIC = 0.032f;
-    public static final float    DEFAULT_CUTOFF = 12.5f;
+    public static final float    DEFAULT_CUTOFF = (float) Math.toRadians(12.5f);
+    public static final float    DEFAULT_OUTER_CUTOFF = (float) Math.toRadians(17.5f);
 
     public ShaderProgram lightShaderProgram;
     public ShaderProgram objectShaderProgram;
@@ -33,8 +31,8 @@ public class ALight extends AUpdate {
     public Scene scene;
     public Transform transform;
 
-    public Vector4f lightPosition = new Vector4f();
-    public Vector4f lightDirection = new Vector4f();
+    public Vector3f lightPosition = new Vector3f();
+    public Vector3f lightDirection = new Vector3f();
     public Vector3f lightDiffuseColor;
     public Vector3f lightAmbientColor;
     public Vector3f lightSpecularColor;
@@ -42,10 +40,10 @@ public class ALight extends AUpdate {
     public float lightLinear;
     public float lightQuadratic;
     public float cutoff;
+    public float outCutoff;
     public boolean isSetup = false;
     public boolean isSpotLight = false;
-
-    public Vector4f tempVec4f = new Vector4f();
+    public boolean isDirectionLight = false;
 
     public ALight(Window window, Scene scene) {
         super(window);
@@ -75,8 +73,10 @@ public class ALight extends AUpdate {
         objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_DIFFUSE.name, lightDiffuseColor);
         objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_SPECULAR.name, lightSpecularColor);
         objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_IS_SPOT.name, isSpotLight);
+        objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_IS_DIRECTION.name, isDirectionLight);
         if (isSpotLight) {
             objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_SPOT_CUTOFF.name, cutoff);
+            objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_SPOT_CUTOFF.name, outCutoff);
             objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_SPOT_DIR.name, lightDirection);
             objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_CONSTANT.name, lightConstant);
             objectShaderProgram.setUniform(FragShader.UniformName.LIGHT_LINEAR.name, lightLinear);
@@ -96,6 +96,7 @@ public class ALight extends AUpdate {
         if (lightLinear == 0) lightLinear = DEFAULT_LIGHT_LINEAR;
         if (lightQuadratic == 0) lightQuadratic = DEFAULT_LIGHT_QUADRATIC;
         if (cutoff == 0) cutoff = DEFAULT_CUTOFF;
+        if (outCutoff == 0) outCutoff = DEFAULT_OUTER_CUTOFF;
         logger.info("光数据: {Constant: {}, Linear: {}, Quadratic: {}, cutoff: {}, 方向: {}}", lightConstant, lightLinear, lightQuadratic, cutoff, lightDirection);
         isSpotLight = true;
     }

@@ -8,7 +8,7 @@ struct Material {
 };
 
 struct Light {
-    vec4 position;
+    vec3 position;
     vec3 direction;
 
     vec3 ambient;
@@ -19,8 +19,10 @@ struct Light {
     float linear;
     float quadratic;
     float cutOff;
+    float outerCutOff;
 
     bool isSpot;
+    bool isDirection;
 };
 
 in vec3 Normal;
@@ -35,7 +37,7 @@ void main()
 {
     // 片段位置到光源位置的向量
     vec3 lightDir = normalize(light.position.rgb - FragPos); // 光源位置到片段位置的向量
-    if (light.position.w == 0.0) { // 平行光
+    if (light.isDirection) { // 平行光
         lightDir = normalize(-light.position.rgb);
     }
     // 计算距离和衰减比率
@@ -62,8 +64,12 @@ void main()
     vec3 result = ambient + diffuse + specular;
     if (light.isSpot) {
         float theta = dot(lightDir, normalize(-light.direction));
+        // 计算光强度I
+        float intensity = 0.0;
         if (theta > light.cutOff) { // 片段位置在光 sources 内
             FragColor = vec4(result, 1.0);
+        } else if (theta > light.outerCutOff) {
+            intensity = clamp((theta - light.outerCutOff) / (light.cutOff - light.outerCutOff), 0.0, 1.0);
         } else {
             FragColor = vec4(light.ambient * texture(material.diffuse, TexCoords).rgb, 1.0);
         }

@@ -134,16 +134,30 @@ public class Scene extends AUpdate {
 
     public void updateProjectionMatrix() {
         if (!needUpdateProjectionMatrix) return;
-        projectionMatrix = projectionMatrix.perspective(camera.fov, (float) window.w / window.h, camera.zNear, camera.zFar);
+        projectionMatrix = projectionMatrix.perspective(camera.fov, (float) window.width / window.height, camera.zNear, camera.zFar);
         glUseProgram(objShaderProgram.programID);
         objShaderProgram.setUniform(VertexShader.UniformName.Projection.name, projectionMatrix);
         camera.updateViewMatrix();
+        int error = glGetError();
+        if (error != GL_NO_ERROR) {
+            logger.error("更新投影矩阵时发生错误: {}", error);
+        }
         logger.info("投影矩阵: {}", projectionMatrix);
         needUpdateProjectionMatrix = false;
     }
 
     private void updateCube(Cube cube) {
-        cube.transform.addRotation(rand.nextFloat() * 0.01f, rand.nextFloat() * 0.01f, rand.nextFloat() * 0.01f);
+        boolean f1 = rand.nextFloat() > 0.5f;
+        boolean f2 = rand.nextFloat() > 0.5f;
+        boolean f3 = rand.nextFloat() > 0.5f;
+        float x, y, z;
+        if (f1) x = rand.nextFloat() * 0.01f;
+        else x = -rand.nextFloat() * 0.01f;
+        if (f2) y = rand.nextFloat() * 0.01f;
+        else y = -rand.nextFloat() * 0.01f;
+        if (f3) z = rand.nextFloat() * 0.01f;
+        else z = -rand.nextFloat() * 0.01f;
+        cube.transform.addRotation(x, y, z);
         cube.transform.updateMatrix();
     }
 }

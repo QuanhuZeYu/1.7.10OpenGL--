@@ -19,6 +19,7 @@ public class FragShader extends Shader {
         LIGHT_QUADRATIC("light.quadratic"),
         LIGHT_SPOT_CUTOFF("light.cutOff"),
         LIGHT_IS_SPOT("light.isSpot"),
+        LIGHT_IS_DIRECTION("light.isDirection"),
 
         MATERIAL_DIFFUSE("material.diffuse"),
         MATERIAL_SPECULAR("material.specular"),

@@ -11,11 +11,11 @@ import java.util.Set;
 import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.createCapabilities;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Window {
     public String title;
-    public int w, h;
+    public int width, height;
     public float fps;
     public long handle;
 
@@ -29,10 +29,10 @@ public class Window {
     public Set<AUpdate> renders = new LinkedHashSet<>();
 
     // 构造一个OpenGL窗口
-    public Window(String title, int w, int h) {
+    public Window(String title, int width, int height) {
         this.title = title;
-        this.w = w;
-        this.h = h;
+        this.width = width;
+        this.height = height;
         init();  // 初始化OpenGL
         createWindow();
     }
@@ -52,7 +52,7 @@ public class Window {
 }
 
     public void createWindow() {
-        handle = glfwCreateWindow(w, h, title, 0, 0);
+        handle = glfwCreateWindow(width, height, title, 0, 0);
         if (handle == 0) {
             glfwTerminate();
             logger.error("创建窗口失败");
@@ -68,8 +68,8 @@ public class Window {
         glfwShowWindow(handle);
 
         glfwSetWindowSizeCallback(handle, (window, width, height) -> {
-            this.w = width;
-            this.h = height;
+            this.width = width;
+            this.height = height;
             logger.info("窗口大小已更新为 {}: {}", width, height);
             for (AUpdate render : renders) {
                 if (render instanceof Scene) {
@@ -78,12 +78,18 @@ public class Window {
                 }
             }
             glViewport(0, 0, width, height);
+            int error = glGetError();
+            if (error != GL_NO_ERROR) {
+                logger.error("OpenGL 错误: {}", error);
+            }
         });
     }
 
     public void loop() {
         while (!glfwWindowShouldClose(handle)) {
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+            // 清除颜色缓冲区设置，通常放在渲染前
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // 设置清除颜色为黑色
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // 清除颜色缓冲区和深度缓冲区
             logicUpdate();
             renderUpdate();
             glfwSwapBuffers(handle);

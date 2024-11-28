@@ -52,7 +52,7 @@ public class Camera extends AUpdate {
         rotation = transform.quaternionf;
         viewMatrix = new Matrix4f();
         invertViewMatrix = new Matrix4f();
-        projectionMatrix = projectionMatrix.perspective(fov, window.w / (float) window.h, zNear, zFar);
+        projectionMatrix = projectionMatrix.perspective(fov, window.width / (float) window.height, zNear, zFar);
         tempQuat = new Quaternionf();
         front = new Vector3f();
         right = new Vector3f();
