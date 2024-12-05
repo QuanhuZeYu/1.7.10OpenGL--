@@ -1,12 +1,10 @@
 package club.heiqi.window;
 
-import club.heiqi.updater.AUpdate;
-import club.heiqi.updater.render.Scene;
-import org.lwjgl.opengl.GL11;
+import club.heiqi.接口.IDrawable;
+import club.heiqi.接口.IUpdate;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static club.heiqi.loger.MyLog.logger;
 import static org.lwjgl.glfw.GLFW.*;
@@ -22,11 +20,7 @@ public class Window {
     public long markTime = 0;
     public int frames;
 
-    public AUpdate keyInputController;
-    public AUpdate mouseInputController;
-    public Set<AUpdate> logicUpdaters = new LinkedHashSet<>();
-    public Set<AUpdate> unloadCache = new HashSet<>();
-    public Set<AUpdate> renders = new LinkedHashSet<>();
+    public List<IUpdate> updateList = new ArrayList<>();
 
     // 构造一个OpenGL窗口
     public Window(String title, int width, int height) {
@@ -70,18 +64,7 @@ public class Window {
         glfwSetWindowSizeCallback(handle, (window, width, height) -> {
             this.width = width;
             this.height = height;
-            logger.info("窗口大小已更新为 {}: {}", width, height);
-            for (AUpdate render : renders) {
-                if (render instanceof Scene) {
-                    ((Scene) render).needUpdateProjectionMatrix = true;
-                    break;
-                }
-            }
             glViewport(0, 0, width, height);
-            int error = glGetError();
-            if (error != GL_NO_ERROR) {
-                logger.error("OpenGL 错误: {}", error);
-            }
         });
     }
 
@@ -102,24 +85,16 @@ public class Window {
     }
 
     public void logicUpdate() {
-        for (AUpdate logicUpdater : logicUpdaters) {
-            logicUpdater.update();
-            if (logicUpdater.isNeedUnload) {
-                unloadCache.add(logicUpdater);
-            }
-        }
-        for (AUpdate unload : unloadCache) {
-            logicUpdaters.remove(unload);
+        for (IUpdate update : updateList) {
+            update.update();
         }
     }
 
     public void renderUpdate() {
-        if (glfwGetCurrentContext() != handle) {
-            logger.error("OpenGL上下文无效");
-            throw new IllegalStateException("OpenGL上下文无效");
-        }
-        for (AUpdate render : renders) {
-            render.update();
+        for (IUpdate update : updateList) {
+            if (update instanceof IDrawable) {
+                ((IDrawable) update).draw();
+            }
         }
     }
 

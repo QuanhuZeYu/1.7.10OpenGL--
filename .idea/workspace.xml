@@ -4,17 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="暂存">
-      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/QZIMGUI.java" afterDir="false" />
+    <list default="true" id="c933aa52-8050-420f-8b64-d5cf2383d3d3" name="更改" comment="实现聚光">
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/场景/固定管线场景.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/接口/IBind.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/接口/IDrawable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/接口/ISetup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/接口/IUpdate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/BaseObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/baseObject/Material.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/baseObject/Mesh.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/baseObject/Texture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/精妙背包.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/组件/Camera.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/组件/Transform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/resources/models/cube/无标题.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/resources/models/cube/无标题.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/resources/models/cube/皮革贴图.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/src/main/resources/models/精妙背包/皮革贴图.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/src/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/controller/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/controller/MouseInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/ALight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/ALight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CamLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CamLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/loger/MyLog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/FragShader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/Shader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/ShaderProgram.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/shader/VertexShader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/AUpdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/controller/KeyInput.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/controller/MouseInput.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Camera.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/QZIMGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/Scene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/TestRender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/Cube.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/cube/PlaneCube.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/ALight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CamLight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/light/CubeLight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/AMesh.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Drawable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Rectangle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Texture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/plane/Triangle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/EulerRotateAxis.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/updater/render/transform/Transform.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/util/FileManager.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/java/club/heiqi/window/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/java/club/heiqi/window/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/models/精妙背包/精妙背包.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/models/精妙背包/精妙背包.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/models/精妙背包/精妙背包.obj" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/models/精妙背包/精妙背包.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/src/main/resources/shader/frag.fs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,9 +94,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="AnnotationType" />
         <option value="fs-template" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -68,7 +104,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="d5094a53535e437d730da3403e651ef8cc0c65c0" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -92,7 +128,6 @@
   <component name="ProjectId" id="2owFREAiY6k9JvH2m9ejUzABUzk" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
@@ -101,9 +136,9 @@
     "Gradle.src.executor": "Run",
     "Gradle.下载源代码.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "固定管线",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Code/MC/ReWork/src/src/main/resources/models/精妙背包",
+    "last_opened_file_path": "D:/Code/MC/ReWork/src/src/main/resources/models/cube",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -118,6 +153,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Code\MC\ReWork\src\src\main\resources\models\cube" />
       <recent name="D:\Code\MC\ReWork\src\src\main\resources\models\精妙背包" />
       <recent name="D:\Code\MC\ReWork\src\src\main\resources\texture" />
     </key>
@@ -165,6 +201,8 @@
       <workItem from="1731772724040" duration="26406000" />
       <workItem from="1732527561681" duration="13000" />
       <workItem from="1732606291057" duration="47430000" />
+      <workItem from="1732781959561" duration="53680000" />
+      <workItem from="1733339547770" duration="6108000" />
     </task>
     <task id="LOCAL-00001" summary="即时模式进一步探讨, 如何进行缩放 旋转 位移">
       <option name="closed" value="true" />
@@ -262,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732716764834</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="实现聚光">
+      <option name="closed" value="true" />
+      <created>1732782770419</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1732782770419</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,6 +338,28 @@
     <MESSAGE value="调整结构， 批量生成Cube进入场景" />
     <MESSAGE value="实现点光的距离衰减" />
     <MESSAGE value="暂存" />
-    <option name="LAST_COMMIT_MESSAGE" value="暂存" />
+    <MESSAGE value="实现聚光" />
+    <option name="LAST_COMMIT_MESSAGE" value="实现聚光" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/BaseObject.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/src/main/java/club/heiqi/场景/固定管线场景.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/src/main/java/club/heiqi/物体/baseObject/Texture.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
