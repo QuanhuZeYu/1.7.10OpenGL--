@@ -1,8 +1,5 @@
 package club.heiqi.window;
 
-import club.heiqi.接口.IDrawable;
-import club.heiqi.接口.IUpdate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +16,6 @@ public class Window {
 
     public long markTime = 0;
     public int frames;
-
-    public List<IUpdate> updateList = new ArrayList<>();
 
     // 构造一个OpenGL窗口
     public Window(String title, int width, int height) {
@@ -75,9 +70,9 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // 清除颜色缓冲区和深度缓冲区
             logicUpdate();
             renderUpdate();
+            glfwPollEvents();
             glfwSwapBuffers(handle);
             internalUpdate();
-            glfwPollEvents();
         }
         // 释放资源
         glfwDestroyWindow(handle);
@@ -85,17 +80,11 @@ public class Window {
     }
 
     public void logicUpdate() {
-        for (IUpdate update : updateList) {
-            update.update();
-        }
+
     }
 
     public void renderUpdate() {
-        for (IUpdate update : updateList) {
-            if (update instanceof IDrawable) {
-                ((IDrawable) update).draw();
-            }
-        }
+
     }
 
     public void internalUpdate() {
